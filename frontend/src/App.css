@@ -1,0 +1,669 @@
+body {
+  margin: 0;
+  background: white;
+  font-family: "Yu Gothic", sans-serif;
+}
+
+
+/* =========================
+   共通コンテナ
+========================= */
+
+.container {
+  width: 600px;
+  max-width: calc(100% - 32px);
+  margin: 40px auto;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   ヘッダー
+========================= */
+
+.header {
+  background-color: lightblue;
+  color: white;
+  padding: 20px 24px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+
+/* =========================
+   フォーム
+========================= */
+
+.form-area {
+  padding: 24px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.required {
+  color: red;
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+textarea {
+  width: 100%;
+  height: 140px;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 2px solid rgb(146, 186, 233);
+  border-radius: 8px;
+  resize: none;
+  font-size: 16px;
+}
+
+input,
+select {
+  width: 100%;
+  height: 52px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 2px solid rgb(146, 186, 233);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.form-group {
+  margin-top: 24px;
+}
+
+
+/* =========================
+   下部エリア
+========================= */
+
+.bottom-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 32px;
+}
+
+.date-area p {
+  margin: 0;
+  color: gray;
+}
+
+.date-area .date {
+  margin-top: 8px;
+  font-size: 24px;
+  color: black;
+}
+
+
+/* =========================
+   ボタン共通
+========================= */
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================
+   確認画面
+========================= */
+
+.confirm-area {
+  padding: 24px;
+}
+
+.confirm-message {
+  font-size: 18px;
+  color: black;
+}
+
+.confirm-card {
+  margin-top: 20px;
+  border: 2px solid white;
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 16px;
+}
+
+.confirm-item {
+  padding: 16px 0;
+  border-bottom: 1px solid white;
+}
+
+.confirm-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: black;
+  margin-bottom: 8px;
+}
+
+.destination {
+  color: rgb(146, 186, 233);
+  font-weight: bold;
+}
+
+.button-area {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.back-button {
+  background: white;
+  color: black;
+  border: 2px solid white;
+  padding: 14px 32px;
+  border-radius: 8px;
+}
+
+.submit-button {
+  background: green;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+}
+
+
+/* =========================
+   完了画面
+========================= */
+
+.complete-area {
+  padding: 32px;
+  text-align: center;
+}
+
+.success-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+.complete-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px auto;
+  max-width: 400px;
+}
+
+.complete-card p {
+  margin: 12px 0;
+  font-size: 18px;
+}
+
+.complete-message {
+  color: #2563eb;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.complete-button {
+  background: lightblue;
+  color: white;
+  min-width: 220px;
+  font-size: 18px;
+}
+
+.register-button {
+  display: block;
+  margin: 24px auto 0;
+}
+
+
+/* =========================
+   エラー
+========================= */
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+
+/* =========================
+   Teamsリンク
+========================= */
+
+.teams-link-button {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.teams-link-button:hover {
+  opacity: 0.9;
+}
+
+
+/* =========================
+   説明
+========================= */
+
+.form-description {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+
+/* =========================
+   新規登録ボタン
+========================= */
+
+.new-message-button {
+  display: inline-block;
+  margin-top: 16px;
+  background: #10b981;
+  color: white;
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.new-message-button:hover {
+  opacity: 0.9;
+}
+
+
+/* =========================
+   ヘッダー内
+========================= */
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+/* =========================
+   一覧ヘッダー
+========================= */
+
+.list-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+
+/* =========================
+   検索
+========================= */
+
+.search-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 26px;
+}
+
+.search-area input {
+  width: 270px;
+  height: 46px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #3a3a3a;
+  color: white;
+  font-size: 16px;
+}
+
+.search-area input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================
+   伝言一覧テーブル
+========================= */
+
+.message-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+
+/* =========================
+   テーブルヘッダー
+========================= */
+
+.message-table th {
+  background-color: #d9eef5;
+  border: 1px solid #d1d5db;
+  padding: 10px 6px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 16px;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   テーブルセル
+========================= */
+
+.message-table td {
+  border: 1px solid #d1d5db;
+  padding: 10px 6px;
+  text-align: center;
+  vertical-align: middle;
+  color: #94a3b8;
+  box-sizing: border-box;
+}
+
+
+/* 偶数行 */
+
+.message-table tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+
+/* =========================
+   列幅
+========================= */
+
+/*
+ * 1列目：受電日時
+ */
+.message-table th:nth-child(1),
+.message-table td:nth-child(1) {
+  width: 112px;
+}
+
+
+/*
+ * 2列目：伝言先
+ */
+.message-table th:nth-child(2),
+.message-table td:nth-child(2) {
+  width: 72px;
+  white-space: nowrap;
+}
+
+
+/*
+ * 3列目：伝言内容
+ *
+ * 残りの幅を使用
+ */
+.message-table th:nth-child(3),
+.message-table td:nth-child(3) {
+  width: auto;
+  min-width: 0;
+}
+
+
+/*
+ * 4列目：削除
+ */
+.message-table th:nth-child(4),
+.message-table td:nth-child(4) {
+  width: 78px;
+}
+
+
+/* =========================
+   伝言日時
+========================= */
+
+.message-table td:nth-child(1) {
+  white-space: normal;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   伝言内容プレビューボタン
+========================= */
+
+.message-preview-button {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  background-color: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 12px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  /*
+   * 長い文章を1行にする
+   */
+  white-space: nowrap;
+
+  /*
+   * セルからはみ出さないようにする
+   */
+  overflow: hidden;
+
+  /*
+   * 長い文章を ... にする
+   */
+  text-overflow: ellipsis;
+
+  text-align: left;
+}
+
+
+/* ホバー */
+
+.message-preview-button:hover {
+  background-color: #1d4ed8;
+}
+
+
+/* =========================
+   削除ボタン
+========================= */
+
+.delete-button {
+  display: inline-block;
+
+  background-color: #ef4444;
+  color: white;
+
+  border: none;
+  padding: 8px 10px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  min-width: 60px;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+.delete-button:hover {
+  background-color: #dc2626;
+}
+
+
+/* =========================
+   詳細画面
+========================= */
+
+.detail-message {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.detail-item {
+  margin-bottom: 18px;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #374151;
+}
+
+.detail-value {
+  color: #6b7280;
+}
+
+
+/* =========================
+   詳細の伝言内容
+========================= */
+
+.detail-body {
+  margin-top: 8px;
+  padding: 15px;
+
+  background: white;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  color: #374151;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  line-height: 1.7;
+}
+
+
+/* =========================
+   詳細画面戻るボタン
+========================= */
+
+.detail-back-area {
+  text-align: center;
+  margin-top: 24px;
+}
+
+
+/* =========================
+   スマートフォン対応
+========================= */
+
+@media (max-width: 640px) {
+
+  .container {
+    width: calc(100% - 20px);
+    max-width: none;
+    margin: 20px auto;
+  }
+
+  .form-area {
+    padding: 16px;
+  }
+
+  .message-table th,
+  .message-table td {
+    padding: 8px 4px;
+    font-size: 14px;
+  }
+
+  .message-table th:nth-child(1),
+  .message-table td:nth-child(1) {
+    width: 95px;
+  }
+
+  .message-table th:nth-child(2),
+  .message-table td:nth-child(2) {
+    width: 60px;
+  }
+
+  .message-table th:nth-child(4),
+  .message-table td:nth-child(4) {
+    width: 65px;
+  }
+
+  .message-preview-button {
+    padding: 9px 8px;
+    font-size: 14px;
+  }
+
+  .delete-button {
+    min-width: 52px;
+    padding: 7px 6px;
+    font-size: 13px;
+  }
+
+  .search-area input {
+    width: 270px;
+    max-width: 100%;
+  }
+
+}
