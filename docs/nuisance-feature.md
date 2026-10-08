@@ -79,4 +79,4 @@ const digits = half.replace(/\D/g, ""); // 数字以外を取り除く
 
 ## テスト
 
-`tsc`、`eslint`、node での流れのテストは通過。手動のテスト表(39件)も全項目OK。
+`tsc`、`eslint`、node での流れのテストは通過。手動のテスト表(31件)も全項目OK。詳細は [nuisance-test.md](nuisance-test.md)。
