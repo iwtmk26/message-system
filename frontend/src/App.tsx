@@ -5,6 +5,8 @@ import ConfirmationPage from "./pages/ConfirmationPage";
 import CompletionPage from "./pages/CompletionPage.tsx";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
+import NuisanceSearchPage from "./pages/NuisanceSearchPage";
+import NuisanceListPage from "./pages/NuisanceListPage";
 
 
 function App() {
@@ -35,6 +37,16 @@ function App() {
         <Route
           path="/detail/:messageId"
           element={<DetailPage />}
+        />
+
+        <Route
+          path="/nuisance"
+          element={<NuisanceSearchPage />}
+        />
+
+        <Route
+          path="/nuisance/list"
+          element={<NuisanceListPage />}
         />
 
       </Routes>

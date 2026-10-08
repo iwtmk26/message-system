@@ -587,11 +587,12 @@ button:hover {
 
 .detail-body {
   margin-top: 8px;
-  padding: 15px;
+  padding: 16px 18px;
 
   background: white;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #2563eb;
   border-radius: 8px;
 
   color: #374151;
@@ -602,7 +603,6 @@ button:hover {
   line-height: 1.7;
 }
 
-
 /* =========================
    詳細画面戻るボタン
 ========================= */
@@ -612,6 +612,64 @@ button:hover {
   margin-top: 24px;
 }
 
+/* =========================
+   詳細画面：メタ情報グリッド
+========================= */
+
+.detail-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.detail-meta-label {
+  display: block;
+  font-size: 12px;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.detail-meta-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+
+/* =========================
+   詳細画面：伝言内容セクション見出し
+========================= */
+
+.detail-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+
+/* =========================
+   詳細画面：一覧へ戻る(下部の大きいボタン)
+========================= */
+
+.detail-list-button {
+  display: inline-block;
+  margin-top: 8px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.detail-list-button:hover {
+  opacity: 0.9;
+}
 
 /* =========================
    スマートフォン対応
@@ -624,6 +682,11 @@ button:hover {
     max-width: none;
     margin: 20px auto;
   }
+  .detail-meta {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
 
   .form-area {
     padding: 16px;
@@ -664,6 +727,248 @@ button:hover {
   .search-area input {
     width: 270px;
     max-width: 100%;
+  }
+
+}
+
+
+/* =========================
+   迷惑番号リスト
+========================= */
+
+/* ヘッダー内：ボタンが増えても折り返せるように */
+.header-content {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* <Link> で作ったボタンの下線を消す */
+a.list-button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* 小さめボタン(既存の button は 18px・余白大のため) */
+.small-button {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.small-button.secondary {
+  background: white;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+  padding: 6px 12px;
+}
+
+.small-button.secondary:hover {
+  background: #eff6ff;
+}
+
+
+/* 検索行 */
+
+.nuisance-search-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.nuisance-search-row input {
+  flex: 1;
+  min-width: 0;
+  font-size: 20px;
+}
+
+.nuisance-search-row button {
+  padding: 0 24px;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+
+/* 検索結果 */
+
+.nuisance-result {
+  margin-top: 24px;
+  padding: 20px;
+  border: 2px solid;
+  border-radius: 12px;
+}
+
+.nuisance-result.is-hit {
+  background: #fef2f2;
+  border-color: #ef4444;
+}
+
+.nuisance-result.is-clear {
+  background: #f0fdf4;
+  border-color: #10b981;
+}
+
+.nuisance-badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.nuisance-badge.is-hit {
+  background: #ef4444;
+}
+
+.nuisance-badge.is-clear {
+  background: #10b981;
+}
+
+.nuisance-phone {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.nuisance-hint {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.nuisance-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  margin-top: 16px;
+}
+
+.nuisance-log-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.nuisance-log-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+  color: #374151;
+}
+
+.nuisance-log-form {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.nuisance-log-form input {
+  height: 44px;
+  font-size: 15px;
+}
+
+.nuisance-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+
+/* 一覧のカード */
+
+.nuisance-card {
+  margin-top: 12px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #ef4444;
+  border-radius: 8px;
+}
+
+.nuisance-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.nuisance-count {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.nuisance-company {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: #374151;
+}
+
+.nuisance-memo {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.nuisance-meta {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+
+/* 登録・編集フォーム */
+
+.nuisance-form {
+  margin: 16px 0;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.nuisance-form .nuisance-first {
+  margin-top: 0;
+}
+
+.nuisance-form textarea {
+  height: 90px;
+}
+
+/* チェックボックスは、共通の input(幅100%・高さ52px)を打ち消す */
+.nuisance-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-weight: normal;
+}
+
+.nuisance-check input {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+
+  .nuisance-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .nuisance-log-form {
+    grid-template-columns: 1fr;
   }
 
 }

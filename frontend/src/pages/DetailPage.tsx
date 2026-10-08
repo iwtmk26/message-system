@@ -158,9 +158,13 @@ function DetailPage() {
 
         <div className="header">
 
-          <h1>
-            伝言詳細
-          </h1>
+          <div className="header-content">
+
+            <h1>
+              伝言詳細
+            </h1>
+
+          </div>
 
         </div>
 
@@ -194,9 +198,20 @@ function DetailPage() {
 
         <div className="header">
 
-          <h1>
-            伝言詳細
-          </h1>
+          <div className="header-content">
+
+            <h1>
+              伝言詳細
+            </h1>
+
+            <Link
+              to="/list"
+              className="list-button"
+            >
+              一覧へ
+            </Link>
+
+          </div>
 
         </div>
 
@@ -209,16 +224,11 @@ function DetailPage() {
 
           </p>
 
-          <div
-            style={{
-              marginTop: "20px",
-              textAlign: "center",
-            }}
-          >
+          <div className="detail-back-area">
 
             <Link
               to="/list"
-              className="new-message-button"
+              className="detail-list-button"
             >
               一覧へ戻る
             </Link>
@@ -244,86 +254,81 @@ function DetailPage() {
 
       <div className="header">
 
-        <h1>
-          伝言詳細
-        </h1>
+        <div className="header-content">
+
+          <h1>
+            伝言詳細
+          </h1>
+
+          <Link
+            to="/list"
+            className="list-button"
+          >
+            一覧へ
+          </Link>
+
+        </div>
 
       </div>
 
       <div className="form-area">
 
-        <div className="complete-card">
+        <div className="detail-message">
 
-          <p>
+          {/*
+           * 受電日時・伝言先・受電者を
+           * 横並びのメタ情報として表示
+           */}
+          <div className="detail-meta">
 
-            <strong>
-              受電日時：
-            </strong>
+            <div>
+              <span className="detail-meta-label">
+                受電日時
+              </span>
+              <span className="detail-meta-value">
+                {message.registeredAt}
+              </span>
+            </div>
 
-            {message.registeredAt}
+            <div>
+              <span className="detail-meta-label">
+                伝言先
+              </span>
+              <span className="detail-meta-value">
+                {message.destination}
+              </span>
+            </div>
 
-          </p>
-
-          <p>
-
-            <strong>
-              伝言先：
-            </strong>
-
-            {message.destination}
-
-          </p>
-
-          <p>
-
-            <strong>
-              受電者：
-            </strong>
-
-            {message.receiverName}
-
-          </p>
-
-          <div
-            style={{
-              marginTop: "20px",
-            }}
-          >
-
-            <strong>
-              伝言内容
-            </strong>
-
-            <div
-              style={{
-                marginTop: "10px",
-                padding: "15px",
-                border: "1px solid #d1d5db",
-                borderRadius: "8px",
-                backgroundColor: "#f8fafc",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
-              }}
-            >
-
-              {message.messageBody}
-
+            <div>
+              <span className="detail-meta-label">
+                受電者
+              </span>
+              <span className="detail-meta-value">
+                {message.receiverName}
+              </span>
             </div>
 
           </div>
 
+          {/*
+           * 伝言内容は主役として
+           * 見出し＋アクセント枠で目立たせる
+           */}
+          <div className="detail-section-title">
+            伝言内容
+          </div>
+
+          <div className="detail-body">
+            {message.messageBody}
+          </div>
+
         </div>
 
-        <div
-          style={{
-            marginTop: "20px",
-            textAlign: "center",
-          }}
-        >
+        <div className="detail-back-area">
 
           <Link
             to="/list"
-            className="new-message-button"
+            className="detail-list-button"
           >
             一覧へ戻る
           </Link>

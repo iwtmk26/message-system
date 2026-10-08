@@ -112,14 +112,27 @@ function RegistrationPage() {
 
           <h1>登録フォーム</h1>
 
-          <button
-            className="list-button"
-            onClick={() =>
-              navigate("/list")
-            }
-          >
-            一覧
-          </button>
+          <div className="header-actions">
+
+            <button
+              className="list-button"
+              onClick={() =>
+                navigate("/nuisance")
+              }
+            >
+              番号検索
+            </button>
+
+            <button
+              className="list-button"
+              onClick={() =>
+                navigate("/list")
+              }
+            >
+              一覧
+            </button>
+
+          </div>
 
         </div>
 

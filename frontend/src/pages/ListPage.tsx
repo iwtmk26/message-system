@@ -153,9 +153,20 @@ function ListPage() {
 
       <div className="header">
 
-        <h1>
-          伝言一覧
-        </h1>
+        <div className="header-content">
+
+          <h1>
+            伝言一覧
+          </h1>
+
+          <Link
+            to="/nuisance"
+            className="list-button"
+          >
+            番号検索
+          </Link>
+
+        </div>
 
       </div>
 
