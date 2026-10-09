@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
+import TrashIcon from "../components/TrashIcon";
+import PersonIcon from "../components/PersonIcon";
 
 type Message = {
   messageId: string;
@@ -212,6 +214,11 @@ function ListPage() {
                   className="message-item-main"
                 >
 
+                  <span className="message-item-dest">
+                    <PersonIcon />
+                    {message.destination} 宛
+                  </span>
+
                   {company && (
 
                     <span className="message-item-company">
@@ -220,20 +227,12 @@ function ListPage() {
 
                   )}
 
-                  <span className="message-item-meta">
-
-                    <span className="message-item-date">
-                      {message.registeredAt}
-                    </span>
-
-                    <span className="message-item-dest">
-                      {message.destination}
-                    </span>
-
-                  </span>
-
                   <span className="message-item-body">
                     {body}
+                  </span>
+
+                  <span className="message-item-date">
+                    {message.registeredAt}
                   </span>
 
                 </Link>
@@ -241,13 +240,15 @@ function ListPage() {
                 <button
                   type="button"
                   className="message-item-delete"
+                  aria-label="この伝言を削除"
+                  title="削除"
                   onClick={() =>
                     handleDelete(
                       message.messageId
                     )
                   }
                 >
-                  削除
+                  <TrashIcon />
                 </button>
 
               </li>

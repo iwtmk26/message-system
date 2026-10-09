@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import TrashIcon from "../components/TrashIcon";
 
 import {
   createNuisance,
@@ -458,11 +459,13 @@ function NuisanceListPage() {
               <button
                 type="button"
                 className="delete-button"
+                aria-label="この番号を削除"
+                title="削除"
                 onClick={() =>
                   handleDelete(item)
                 }
               >
-                削除
+                <TrashIcon />
               </button>
 
             </div>

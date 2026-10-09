@@ -1,7 +1,21 @@
+:root {
+  color-scheme: light;
+  --ui-bg: #f1f5fb;
+  --ui-primary: #2563eb;
+  --ui-primary-dark: #1d4ed8;
+  --ui-header-from: #60a5fa;
+  --ui-header-to: #3b82f6;
+  --ui-border: #bccbe3;
+  --ui-field-bg: #e8eef8;
+  --ui-focus: rgba(37, 99, 235, 0.25);
+}
+
 body {
   margin: 0;
-  background: white;
-  font-family: "Yu Gothic", sans-serif;
+  background: var(--ui-bg);
+  color: #1f2937;
+  font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+  letter-spacing: 0.02em;
 }
 
 
@@ -14,9 +28,9 @@ body {
   max-width: calc(100% - 32px);
   margin: 40px auto;
   background: white;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 
@@ -25,7 +39,7 @@ body {
 ========================= */
 
 .header {
-  background-color: lightblue;
+  background: linear-gradient(135deg, var(--ui-header-from), var(--ui-header-to));
   color: white;
   padding: 20px 24px;
 }
@@ -66,10 +80,14 @@ textarea {
   height: 140px;
   padding: 12px;
   box-sizing: border-box;
-  border: 2px solid rgb(146, 186, 233);
-  border-radius: 8px;
+  border: 1.5px solid var(--ui-border);
+  border-radius: 10px;
+  background: var(--ui-field-bg);
+  color: #1f2937;
   resize: none;
   font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 input,
@@ -78,9 +96,26 @@ select {
   height: 52px;
   padding: 0 12px;
   box-sizing: border-box;
-  border: 2px solid rgb(146, 186, 233);
-  border-radius: 8px;
+  border: 1.5px solid var(--ui-border);
+  border-radius: 10px;
+  background: var(--ui-field-bg);
+  color: #1f2937;
   font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--ui-primary);
+  box-shadow: 0 0 0 4px var(--ui-focus);
+}
+
+::placeholder {
+  color: #9ca3af;
 }
 
 .form-group {
@@ -116,17 +151,25 @@ select {
 ========================= */
 
 button {
-  background: #2563eb;
+  background: var(--ui-primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 14px 32px;
   font-size: 18px;
+  font-family: inherit;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
 
 button:hover {
-  background: #1d4ed8;
+  background: var(--ui-primary-dark);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 
@@ -525,24 +568,23 @@ button:hover {
 ========================= */
 
 .delete-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #ef4444;
   color: white;
 
   border: none;
-  padding: 8px 10px;
+  padding: 0;
+  width: 40px;
+  height: 36px;
 
-  border-radius: 6px;
+  border-radius: 8px;
 
   cursor: pointer;
 
-  min-width: 60px;
-
-  font-size: 15px;
-  font-weight: bold;
-
-  white-space: nowrap;
+  box-shadow: none;
 }
 
 .delete-button:hover {
@@ -719,9 +761,8 @@ button:hover {
   }
 
   .delete-button {
-    min-width: 52px;
-    padding: 7px 6px;
-    font-size: 13px;
+    width: 40px;
+    height: 36px;
   }
 
   .search-area input {
@@ -1045,26 +1086,19 @@ a.list-button {
   text-align: left;
 }
 
-.message-item-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
 .message-item-date {
-  color: #6b7280;
-  font-size: 13px;
+  color: #9ca3af;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
 .message-item-dest {
-  background: #e0ecff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: #1d4ed8;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 2px 10px;
-  border-radius: 999px;
 }
 
 .message-item-body {
@@ -1082,12 +1116,17 @@ a.list-button {
 .message-item-delete {
   align-self: center;
   margin-right: 12px;
-  padding: 6px 12px;
-  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: white;
   color: #dc2626;
   border: 1px solid #fca5a5;
-  border-radius: 6px;
+  border-radius: 10px;
+  box-shadow: none;
 }
 
 .message-item-delete:hover {
@@ -1139,4 +1178,26 @@ a.list-button {
 .env-banner-prod {
   background: #dc2626;
   color: #ffffff;
+}
+
+
+/* =========================
+   ヘッダー内のボタン（グラデーションの上で見えるように白抜き）
+========================= */
+
+.header button {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ui-primary-dark);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header button:hover {
+  background: #fff;
+  color: var(--ui-primary-dark);
+}
+
+.header .list-button {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--ui-primary-dark);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
