@@ -37,6 +37,17 @@ import software.amazon.awssdk.services.ses.model.SendEmailRequest;
 public class Handler
         implements RequestHandler<Map<String, Object>, String> {
 
+    /*
+     * テーブル名。環境変数で切り替える（未設定なら本番と同じ名前）
+     */
+    private static final String MESSAGES_TABLE =
+            System.getenv().getOrDefault(
+                    "MESSAGES_TABLE", "Messages");
+
+    private static final String MEMBERS_TABLE =
+            System.getenv().getOrDefault(
+                    "MEMBERS_TABLE", "Members");
+
     @Override
     public String handleRequest(
             Map<String, Object> input,
@@ -192,7 +203,7 @@ public class Handler
                  */
                 PutItemRequest putItemRequest =
                         PutItemRequest.builder()
-                                .tableName("Messages")
+                                .tableName(MESSAGES_TABLE)
                                 .item(item)
                                 .build();
 
@@ -248,7 +259,7 @@ public class Handler
         ScanResponse membersResponse =
                 dynamoDb.scan(
                         ScanRequest.builder()
-                                .tableName("Members")
+                                .tableName(MEMBERS_TABLE)
                                 .build()
                 );
 
@@ -258,7 +269,7 @@ public class Handler
         ScanResponse messagesResponse =
                 dynamoDb.scan(
                         ScanRequest.builder()
-                                .tableName("Messages")
+                                .tableName(MESSAGES_TABLE)
                                 .build()
                 );
 
@@ -399,7 +410,7 @@ public class Handler
 
         ScanRequest scanRequest =
                 ScanRequest.builder()
-                        .tableName("Messages")
+                        .tableName(MESSAGES_TABLE)
                         .build();
 
         ScanResponse response =
@@ -571,7 +582,7 @@ public class Handler
              */
             GetItemRequest request =
                     GetItemRequest.builder()
-                            .tableName("Messages")
+                            .tableName(MESSAGES_TABLE)
                             .key(key)
                             .build();
 
@@ -701,7 +712,7 @@ public class Handler
 
             DeleteItemRequest request =
                     DeleteItemRequest.builder()
-                            .tableName("Messages")
+                            .tableName(MESSAGES_TABLE)
                             .key(key)
                             .build();
 
@@ -748,7 +759,7 @@ public class Handler
 
         ScanRequest scanRequest =
                 ScanRequest.builder()
-                        .tableName("Members")
+                        .tableName(MEMBERS_TABLE)
                         .filterExpression(
                                 "memberName = :memberName"
                         )
