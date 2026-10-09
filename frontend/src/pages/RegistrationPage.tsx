@@ -123,28 +123,6 @@ function RegistrationPage() {
 
           <h1>登録フォーム</h1>
 
-          <div className="header-actions">
-
-            <button
-              className="list-button"
-              onClick={() =>
-                navigate("/nuisance")
-              }
-            >
-              番号検索
-            </button>
-
-            <button
-              className="list-button"
-              onClick={() =>
-                navigate("/list")
-              }
-            >
-              一覧
-            </button>
-
-          </div>
-
         </div>
 
       </div>
@@ -295,7 +273,7 @@ TEL：03-XXXX-XXXX`}
           className="register-button"
           onClick={handleSubmit}
         >
-          登録する →
+          登録する
         </button>
 
       </div>

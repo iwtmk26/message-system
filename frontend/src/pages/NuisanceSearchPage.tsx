@@ -113,18 +113,9 @@ function NuisanceSearchPage() {
 
         <div className="header-content">
 
-          <h1>迷惑番号チェック</h1>
+          <h1>迷惑電話チェック</h1>
 
           <div className="header-actions">
-
-            <button
-              className="list-button"
-              onClick={() =>
-                navigate("/")
-              }
-            >
-              伝言登録
-            </button>
 
             <button
               className="list-button"

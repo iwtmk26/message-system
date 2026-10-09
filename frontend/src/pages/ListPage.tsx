@@ -140,13 +140,6 @@ function ListPage() {
             伝言一覧
           </h1>
 
-          <Link
-            to="/nuisance"
-            className="list-button"
-          >
-            番号検索
-          </Link>
-
         </div>
 
       </div>

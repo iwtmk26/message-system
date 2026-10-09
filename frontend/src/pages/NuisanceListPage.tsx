@@ -222,16 +222,7 @@ function NuisanceListPage() {
                 navigate("/nuisance")
               }
             >
-              番号検索
-            </button>
-
-            <button
-              className="list-button"
-              onClick={() =>
-                navigate("/")
-              }
-            >
-              伝言登録
+              迷惑電話チェック
             </button>
 
           </div>
