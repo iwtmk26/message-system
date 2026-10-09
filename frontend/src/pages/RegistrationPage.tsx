@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { composeBody, splitBody } from "../messageFormat";
+import { apiFetch } from "../api";
 
 type Member = {
   memberId: string;
@@ -11,9 +13,15 @@ function RegistrationPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [messageBody, setMessageBody] = useState(
+  const initial = splitBody(
     location.state?.messageBody ?? ""
   );
+
+  const [companyName, setCompanyName] =
+    useState(initial.company);
+
+  const [messageBody, setMessageBody] =
+    useState(initial.body);
 
   const [receiverName, setReceiverName] = useState(
     location.state?.receiverName ?? ""
@@ -53,8 +61,8 @@ function RegistrationPage() {
 
     const fetchMembers = async () => {
 
-      const response = await fetch(
-        "https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com/members"
+      const response = await apiFetch(
+        "/members"
       );
 
       const data = await response.json();
@@ -94,7 +102,10 @@ function RegistrationPage() {
 
     navigate("/confirm", {
       state: {
-        messageBody,
+        messageBody: composeBody(
+          companyName,
+          messageBody
+        ),
         receiverName,
         destination,
       },
@@ -143,6 +154,26 @@ function RegistrationPage() {
         <p className="form-description">
           採用・営業電話の伝言内容を入力してください。
         </p>
+
+        <div className="form-group">
+
+          <label>
+            電話先（企業名）
+            <span className="optional">
+              任意
+            </span>
+          </label>
+
+          <input
+            type="text"
+            value={companyName}
+            onChange={(e) =>
+              setCompanyName(e.target.value)
+            }
+            placeholder="例：株式会社〇〇"
+          />
+
+        </div>
 
         <div className="form-group">
 

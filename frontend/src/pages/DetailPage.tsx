@@ -3,6 +3,8 @@ import {
   Link,
   useParams,
 } from "react-router-dom";
+import { splitBody } from "../messageFormat";
+import { apiFetch } from "../api";
 
 type Message = {
   messageId: string;
@@ -43,8 +45,8 @@ function DetailPage() {
 
       try {
 
-        const response = await fetch(
-          `https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com/messages/${encodeURIComponent(messageId)}`
+        const response = await apiFetch(
+          `/messages/${encodeURIComponent(messageId)}`
         );
 
         /*
@@ -243,6 +245,9 @@ function DetailPage() {
 
   }
 
+  const { company, body } =
+    splitBody(message.messageBody);
+
   /*
    * ============================
    * 詳細表示
@@ -290,6 +295,19 @@ function DetailPage() {
               </span>
             </div>
 
+            {company && (
+
+              <div>
+                <span className="detail-meta-label">
+                  電話先
+                </span>
+                <span className="detail-meta-value">
+                  {company}
+                </span>
+              </div>
+
+            )}
+
             <div>
               <span className="detail-meta-label">
                 伝言先
@@ -319,7 +337,7 @@ function DetailPage() {
           </div>
 
           <div className="detail-body">
-            {message.messageBody}
+            {body}
           </div>
 
         </div>

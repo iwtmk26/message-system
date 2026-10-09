@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { apiFetch } from "../api";
 
 function ConfirmationPage() {
 
@@ -18,8 +19,8 @@ function ConfirmationPage() {
 
       setIsSubmitting(true);
 
-      const response = await fetch(
-        "https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com/messages",
+      const response = await apiFetch(
+        "/messages",
         {
           method: "POST",
           headers: {

@@ -7,11 +7,15 @@ import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
 import NuisanceSearchPage from "./pages/NuisanceSearchPage";
 import NuisanceListPage from "./pages/NuisanceListPage";
+import EnvBanner from "./components/EnvBanner";
 
 
 function App() {
   return (
     <BrowserRouter>
+
+      <EnvBanner />
+
       <Routes>
 
         <Route

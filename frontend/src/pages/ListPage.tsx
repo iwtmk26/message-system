@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { splitBody } from "../messageFormat";
+import { apiFetch } from "../api";
 
 type Message = {
   messageId: string;
@@ -14,13 +13,14 @@ type Message = {
 
 function ListPage() {
 
-  const navigate = useNavigate();
-
   const [messages, setMessages] =
     useState<Message[]>([]);
 
   const [keyword, setKeyword] =
     useState("");
+
+  const [loaded, setLoaded] =
+    useState(false);
 
   useEffect(() => {
 
@@ -28,8 +28,8 @@ function ListPage() {
 
       try {
 
-        const response = await fetch(
-          "https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com/messages"
+        const response = await apiFetch(
+          "/messages"
         );
 
         if (!response.ok) {
@@ -50,6 +50,10 @@ function ListPage() {
           "伝言一覧取得失敗",
           error
         );
+
+      } finally {
+
+        setLoaded(true);
 
       }
 
@@ -84,8 +88,8 @@ function ListPage() {
 
     try {
 
-      const response = await fetch(
-        `https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com/messages?messageId=${encodeURIComponent(messageId)}`,
+      const response = await apiFetch(
+        `/messages?messageId=${encodeURIComponent(messageId)}`,
         {
           method: "DELETE",
         }
@@ -122,31 +126,6 @@ function ListPage() {
     }
   };
 
-  const handleDetail = (
-    messageId: string
-  ) => {
-
-    navigate(
-      `/detail/${messageId}`
-    );
-
-  };
-
-  const getMessagePreview = (
-    messageBody: string
-  ) => {
-
-    if (messageBody.length > 20) {
-
-      return (
-        messageBody.slice(0, 20) + "..."
-      );
-
-    }
-
-    return messageBody;
-  };
-
   return (
 
     <div className="container">
@@ -180,12 +159,18 @@ function ListPage() {
             onChange={(e) =>
               setKeyword(e.target.value)
             }
-            placeholder="キーワード検索"
+            placeholder="キーワード検索（伝言先・受電者・内容）"
           />
 
         </div>
 
         <div className="list-header">
+
+          <span className="list-count">
+            {loaded
+              ? `${filteredMessages.length}件`
+              : "読み込み中..."}
+          </span>
 
           <Link
             to="/"
@@ -196,92 +181,82 @@ function ListPage() {
 
         </div>
 
-        <table className="message-table">
+        {loaded &&
+          filteredMessages.length === 0 && (
 
-          <thead>
+          <p className="list-empty">
+            {keyword
+              ? "条件に合う伝言はありません"
+              : "伝言はまだありません"}
+          </p>
 
-            <tr>
+        )}
 
-              <th>
-                受電日時
-              </th>
+        <ul className="message-list">
 
-              <th>
-                伝言先
-              </th>
+          {filteredMessages.map(
+            (message) => {
 
-              <th>
-                伝言内容
-              </th>
+              const { company, body } =
+                splitBody(message.messageBody);
 
-              <th>
-                削除
-              </th>
+              return (
 
-            </tr>
+              <li
+                key={message.messageId}
+                className="message-item"
+              >
 
-          </thead>
-
-          <tbody>
-
-            {filteredMessages.map(
-              (message) => (
-
-                <tr
-                  key={message.messageId}
+                <Link
+                  to={`/detail/${message.messageId}`}
+                  className="message-item-main"
                 >
 
-                  <td>
-                    {message.registeredAt}
-                  </td>
+                  {company && (
 
-                  <td>
-                    {message.destination}
-                  </td>
+                    <span className="message-item-company">
+                      {company}
+                    </span>
 
-                  <td>
+                  )}
 
-                    <button
-                      type="button"
-                      className="message-preview-button"
-                      onClick={() =>
-                        handleDetail(
-                          message.messageId
-                        )
-                      }
-                      title="詳細を表示"
-                    >
-                      {getMessagePreview(
-                        message.messageBody
-                      )}
-                    </button>
+                  <span className="message-item-meta">
 
-                  </td>
+                    <span className="message-item-date">
+                      {message.registeredAt}
+                    </span>
 
-                  <td>
+                    <span className="message-item-dest">
+                      {message.destination}
+                    </span>
 
-                    <button
-                      type="button"
-                      className="delete-button"
-                      onClick={() =>
-                        handleDelete(
-                          message.messageId
-                        )
-                      }
-                    >
-                      削除
-                    </button>
+                  </span>
 
-                  </td>
+                  <span className="message-item-body">
+                    {body}
+                  </span>
 
-                </tr>
+                </Link>
 
-              )
-            )}
+                <button
+                  type="button"
+                  className="message-item-delete"
+                  onClick={() =>
+                    handleDelete(
+                      message.messageId
+                    )
+                  }
+                >
+                  削除
+                </button>
 
-          </tbody>
+              </li>
 
-        </table>
+              );
+            }
+          )}
+
+        </ul>
 
       </div>
 
