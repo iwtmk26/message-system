@@ -33,6 +33,17 @@ resource "aws_dynamodb_table" "members" {
   }
 }
 
+resource "aws_dynamodb_table" "nuisance" {
+  name         = "NuisanceNumbers-test"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "phoneNumber"
+
+  attribute {
+    name = "phoneNumber"
+    type = "S"
+  }
+}
+
 resource "aws_lambda_function" "api" {
   function_name = local.name
 
@@ -52,6 +63,7 @@ resource "aws_lambda_function" "api" {
     variables = {
       MESSAGES_TABLE = aws_dynamodb_table.messages.name
       MEMBERS_TABLE  = aws_dynamodb_table.members.name
+      NUISANCE_TABLE = aws_dynamodb_table.nuisance.name
       # 99_テスト - 20_技術部
       TEAMS_EMAIL = "371a9bd5.gravityoffice365.onmicrosoft.com@jp.teams.ms"
       # SES で検証済みのアドレスであること（コンソールで検証する。この stack では作らない）
@@ -68,7 +80,7 @@ resource "aws_apigatewayv2_api" "api" {
   cors_configuration {
     # テストは自分のPCの画面からだけ使う
     allow_origins = ["http://localhost:5173"]
-    allow_methods = ["GET", "POST", "DELETE", "OPTIONS"]
+    allow_methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     allow_headers = ["content-type"]
     max_age       = 300
   }
@@ -88,6 +100,12 @@ resource "aws_apigatewayv2_route" "routes" {
     "GET /messages/{messageId}",
     "DELETE /messages",
     "POST /messages",
+    "GET /nuisance",
+    "GET /nuisance/{phoneNumber}",
+    "POST /nuisance",
+    "PUT /nuisance/{phoneNumber}",
+    "DELETE /nuisance/{phoneNumber}",
+    "POST /nuisance/{phoneNumber}/logs",
   ])
 
   api_id    = aws_apigatewayv2_api.api.id

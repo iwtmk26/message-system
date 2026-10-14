@@ -35,7 +35,7 @@ import software.amazon.awssdk.services.ses.model.Message;
 import software.amazon.awssdk.services.ses.model.SendEmailRequest;
 
 public class Handler
-        implements RequestHandler<Map<String, Object>, String> {
+        implements RequestHandler<Map<String, Object>, Object> {
 
     /*
      * テーブル名。環境変数で切り替える（未設定なら本番と同じ名前）
@@ -49,12 +49,23 @@ public class Handler
                     "MEMBERS_TABLE", "Members");
 
     @Override
-    public String handleRequest(
+    public Object handleRequest(
             Map<String, Object> input,
             Context context) {
 
         String routeKey =
                 String.valueOf(input.get("routeKey"));
+
+        /*
+         * ============================
+         * 迷惑番号（/nuisance ...）
+         * ============================
+         */
+        if (NuisanceApi.matches(routeKey)) {
+
+            return NuisanceApi.handle(routeKey, input);
+
+        }
 
         /*
          * ============================
