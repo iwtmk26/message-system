@@ -168,7 +168,7 @@ function ListPage() {
           </span>
 
           <Link
-            to="/"
+            to="/register"
             className="new-message-button"
           >
             新規登録

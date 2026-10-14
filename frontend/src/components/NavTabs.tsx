@@ -11,7 +11,11 @@ const TABS = [
     label: "迷惑電話チェック",
     match: (p: string) => p.startsWith("/nuisance"),
   },
-  { to: "/", label: "登録フォーム", match: (p: string) => p === "/" },
+  {
+    to: "/register",
+    label: "登録フォーム",
+    match: (p: string) => p === "/register",
+  },
   {
     to: "/list",
     label: "伝言一覧",

@@ -112,7 +112,7 @@ function ConfirmationPage() {
           <button
             className="back-button"
             onClick={() =>
-              navigate("/", {
+              navigate("/register", {
                 state: {
                   messageBody,
                   receiverName,

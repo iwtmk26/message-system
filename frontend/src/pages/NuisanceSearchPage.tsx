@@ -163,7 +163,7 @@ function NuisanceSearchPage() {
                 type="button"
                 className="small-button"
                 onClick={() =>
-                  navigate("/", {
+                  navigate("/register", {
                     state: {
                       messageBody:
                         `TEL：${formatPhone(result.digits)}\n`,

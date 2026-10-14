@@ -57,7 +57,7 @@ function CompletePage() {
         <br />
 
         <Link
-          to="/"
+          to="/register"
           className="new-message-button"
         >
           新しい伝言を登録する

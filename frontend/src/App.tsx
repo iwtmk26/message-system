@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import "./App.css";
 import RegistrationPage from "./pages/RegistrationPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
@@ -21,8 +21,14 @@ function App() {
 
       <Routes>
 
+        {/* 業務は、まず番号の確認から始まるので、最初の画面は「迷惑電話チェック」 */}
         <Route
           path="/"
+          element={<Navigate to="/nuisance" replace />}
+        />
+
+        <Route
+          path="/register"
           element={<RegistrationPage />}
         />
 

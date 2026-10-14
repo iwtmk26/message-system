@@ -14,29 +14,17 @@ try:
         "検索キーワードを入力してください: "
     )
 
-    # 登録画面表示
+    # 伝言一覧を直接開く（画面の最初は「迷惑電話チェック」になったため）
     driver.get(
-        "https://d11xxeftrnkpe5.cloudfront.net"
+        "https://d11xxeftrnkpe5.cloudfront.net/list"
     )
-
-    # 一覧ボタン押下
-    list_button = wait.until(
-        EC.element_to_be_clickable(
-            (
-                By.CLASS_NAME,
-                "list-button"
-            )
-        )
-    )
-
-    list_button.click()
 
     # 検索ボックス取得
     search_box = wait.until(
         EC.visibility_of_element_located(
             (
                 By.CSS_SELECTOR,
-                "input[placeholder='キーワード検索']"
+                "input[placeholder^='キーワード検索']"
             )
         )
     )
