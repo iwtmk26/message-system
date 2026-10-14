@@ -1,13 +1,13 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import TrashIcon from "../components/TrashIcon";
+import NuisanceCard from "../components/NuisanceCard";
+import { IS_MOCK } from "../api";
 
 import {
   createNuisance,
   deleteNuisance,
   formatPhone,
   getSavedReceiverName,
-  lastCalledAt,
   listNuisance,
   normalizePhone,
   updateNuisance,
@@ -56,17 +56,43 @@ function NuisanceListPage() {
   const [errorMessage, setErrorMessage] =
     useState("");
 
-  const [openLogs, setOpenLogs] =
-    useState<string[]>([]);
+  const [loadError, setLoadError] =
+    useState("");
 
   const reload = async () => {
-    setItems(await listNuisance());
+
+    try {
+
+      setItems(await listNuisance());
+
+      setLoadError("");
+
+    } catch (error) {
+
+      console.error(error);
+
+      setLoadError("一覧の取得に失敗しました。もう一度お試しください");
+
+    }
+
   };
 
   useEffect(() => {
 
     const load = async () => {
-      setItems(await listNuisance());
+
+      try {
+
+        setItems(await listNuisance());
+
+      } catch (error) {
+
+        console.error(error);
+
+        setLoadError("一覧の取得に失敗しました。もう一度お試しください");
+
+      }
+
     };
 
     load();
@@ -186,23 +212,23 @@ function NuisanceListPage() {
       return;
     }
 
-    await deleteNuisance(item.phoneNumber);
+    try {
+
+      await deleteNuisance(item.phoneNumber);
+
+    } catch (error) {
+
+      console.error(error);
+
+      window.alert("削除に失敗しました。もう一度お試しください");
+
+      return;
+    }
 
     await reload();
 
   };
 
-  const toggleLogs = (
-    phoneNumber: string
-  ) => {
-
-    setOpenLogs((prev) =>
-      prev.includes(phoneNumber)
-        ? prev.filter((p) => p !== phoneNumber)
-        : [...prev, phoneNumber]
-    );
-
-  };
 
   return (
 
@@ -232,6 +258,14 @@ function NuisanceListPage() {
       </div>
 
       <div className="form-area">
+
+        {loadError && (
+
+          <p className="error-message">
+            {loadError}
+          </p>
+
+        )}
 
         <div className="nuisance-search-row">
 
@@ -392,107 +426,23 @@ function NuisanceListPage() {
 
         {filteredItems.map((item) => (
 
-          <div
-            className="nuisance-card"
+          <NuisanceCard
             key={item.phoneNumber}
-          >
-
-            <div className="nuisance-card-head">
-
-              <span className="nuisance-phone">
-                {formatPhone(item.phoneNumber)}
-              </span>
-
-              <span className="nuisance-count">
-                {item.logs.length}回
-              </span>
-
-            </div>
-
-            <p className="nuisance-company">
-              {item.companyName || "（会社名不明）"}
-            </p>
-
-            {item.memo && (
-
-              <p className="nuisance-memo">
-                {item.memo}
-              </p>
-
-            )}
-
-            <p className="nuisance-meta">
-              最終着信：{lastCalledAt(item)}
-            </p>
-
-            <div className="nuisance-actions">
-
-              <button
-                type="button"
-                className="small-button secondary"
-                onClick={() =>
-                  toggleLogs(item.phoneNumber)
-                }
-              >
-                着信ログ（{item.logs.length}）
-              </button>
-
-              <button
-                type="button"
-                className="small-button secondary"
-                onClick={() =>
-                  openEditForm(item)
-                }
-              >
-                編集
-              </button>
-
-              <button
-                type="button"
-                className="delete-button"
-                aria-label="この番号を削除"
-                title="削除"
-                onClick={() =>
-                  handleDelete(item)
-                }
-              >
-                <TrashIcon />
-              </button>
-
-            </div>
-
-            {openLogs.includes(item.phoneNumber) && (
-
-              <ul className="nuisance-log-list">
-
-                {item.logs.length === 0 && (
-                  <li>ログはまだありません</li>
-                )}
-
-                {[...item.logs]
-                  .reverse()
-                  .map((log, index) => (
-
-                    <li key={`${log.calledAt}-${index}`}>
-                      {log.calledAt}
-                      {" / "}
-                      {log.receiverName || "対応者不明"}
-                      {log.note && `：${log.note}`}
-                    </li>
-
-                  ))}
-
-              </ul>
-
-            )}
-
-          </div>
+            item={item}
+            onUpdated={() => reload()}
+            onEdit={openEditForm}
+            onDelete={handleDelete}
+          />
 
         ))}
 
-        <p className="nuisance-hint">
-          ※ 現在は仮データです。登録した内容は、このブラウザの中だけに保存されます。
-        </p>
+        {IS_MOCK && (
+
+          <p className="nuisance-hint">
+            ※ 仮データです。登録した内容は、このブラウザの中だけに保存されます。
+          </p>
+
+        )}
 
       </div>
 

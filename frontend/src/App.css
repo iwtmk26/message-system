@@ -1,20 +1,21 @@
 :root {
   color-scheme: light;
-  --ui-bg: #f1f5fb;
-  --ui-primary: #2563eb;
-  --ui-primary-dark: #1d4ed8;
-  --ui-header-from: #60a5fa;
-  --ui-header-to: #3b82f6;
-  --ui-border: #bccbe3;
-  --ui-field-bg: #e8eef8;
-  --ui-focus: rgba(37, 99, 235, 0.25);
+  --ui-bg: #f2f7f6;
+  --ui-primary: #005b49;
+  --ui-primary-dark: #00493a;
+  --ui-header-from: #267365;
+  --ui-header-to: #005b49;
+  --ui-border: #bcd3cf;
+  --ui-field-bg: #e3eded;
+  --ui-focus: rgba(0, 91, 73, 0.25);
 }
 
 body {
   margin: 0;
-  background: var(--ui-bg);
+  background-color: var(--ui-bg);
+  background-image: none;
   color: #1f2937;
-  font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+  font-family: "Noto Sans JP", "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
   letter-spacing: 0.02em;
 }
 
@@ -30,7 +31,7 @@ body {
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 91, 73, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 
@@ -39,8 +40,9 @@ body {
 ========================= */
 
 .header {
-  background: linear-gradient(135deg, var(--ui-header-from), var(--ui-header-to));
-  color: white;
+  background: #f7fbfa;
+  border-bottom: 3px solid var(--ui-primary);
+  color: var(--ui-primary);
   padding: 20px 24px;
 }
 
@@ -48,7 +50,7 @@ body {
   margin: 0;
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: var(--ui-primary);
 }
 
 
@@ -159,13 +161,13 @@ button {
   font-size: 18px;
   font-family: inherit;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 91, 73, 0.25);
   transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
 
 button:hover {
   background: var(--ui-primary-dark);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 91, 73, 0.3);
 }
 
 button:active {
@@ -209,7 +211,7 @@ button:active {
 }
 
 .destination {
-  color: rgb(146, 186, 233);
+  color: #9cc3bb;
   font-weight: bold;
 }
 
@@ -266,14 +268,14 @@ button:active {
 }
 
 .complete-message {
-  color: #2563eb;
+  color: #005b49;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 24px;
 }
 
 .complete-button {
-  background: lightblue;
+  background: #267365;
   color: white;
   min-width: 220px;
   font-size: 18px;
@@ -287,14 +289,14 @@ button:active {
 /* 「新規登録」と同じ緑にそろえるボタン */
 .register-button,
 .nuisance-search-row button {
-  background: #10b981;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+  background: #005b49;
+  box-shadow: 0 2px 6px rgba(0, 91, 73, 0.3);
 }
 
 .register-button:hover,
 .nuisance-search-row button:hover {
-  background: #059669;
-  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+  background: #00493a;
+  box-shadow: 0 4px 10px rgba(0, 91, 73, 0.35);
 }
 
 
@@ -316,7 +318,7 @@ button:active {
 
 .teams-link-button {
   display: inline-block;
-  background: #2563eb;
+  background: #005b49;
   color: white;
   text-decoration: none;
   padding: 14px 32px;
@@ -349,7 +351,7 @@ button:active {
 .new-message-button {
   display: inline-block;
   margin-top: 16px;
-  background: #10b981;
+  background: #005b49;
   color: white;
   text-decoration: none;
   padding: 14px 32px;
@@ -374,7 +376,7 @@ button:active {
 }
 
 .list-button {
-  background-color: #2563eb;
+  background-color: #005b49;
   color: white;
   border: none;
   border-radius: 10px;
@@ -439,7 +441,7 @@ button:active {
 ========================= */
 
 .message-table th {
-  background-color: #d9eef5;
+  background-color: #dcebe8;
   border: 1px solid #d1d5db;
   padding: 10px 6px;
   text-align: center;
@@ -537,7 +539,7 @@ button:active {
 
   box-sizing: border-box;
 
-  background-color: #2563eb;
+  background-color: #005b49;
   color: white;
 
   border: none;
@@ -572,7 +574,7 @@ button:active {
 /* ホバー */
 
 .message-preview-button:hover {
-  background-color: #1d4ed8;
+  background-color: #00493a;
 }
 
 
@@ -609,54 +611,10 @@ button:active {
    詳細画面
 ========================= */
 
-.detail-message {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 20px;
-}
-
-.detail-item {
-  margin-bottom: 18px;
-}
-
-.detail-item:last-child {
-  margin-bottom: 0;
-}
-
-.detail-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #374151;
-}
-
-.detail-value {
-  color: #6b7280;
-}
-
 
 /* =========================
    詳細の伝言内容
 ========================= */
-
-.detail-body {
-  margin-top: 8px;
-  padding: 16px 18px;
-
-  background: white;
-
-  border: 1px solid #e5e7eb;
-  border-left: 4px solid #2563eb;
-  border-radius: 8px;
-
-  color: #374151;
-
-  white-space: pre-wrap;
-  word-break: break-word;
-
-  line-height: 1.7;
-}
 
 /* =========================
    詳細画面戻るボタン
@@ -671,39 +629,10 @@ button:active {
    詳細画面：メタ情報グリッド
 ========================= */
 
-.detail-meta {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.detail-meta-label {
-  display: block;
-  font-size: 12px;
-  color: #9ca3af;
-  letter-spacing: 0.02em;
-  margin-bottom: 4px;
-}
-
-.detail-meta-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1f2937;
-  word-break: break-word;
-}
-
 
 /* =========================
    詳細画面：伝言内容セクション見出し
 ========================= */
-
-.detail-section-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 8px;
-}
 
 
 /* =========================
@@ -713,7 +642,7 @@ button:active {
 .detail-list-button {
   display: inline-block;
   margin-top: 8px;
-  background: #2563eb;
+  background: #005b49;
   color: white;
   text-decoration: none;
   padding: 14px 32px;
@@ -737,11 +666,6 @@ button:active {
     max-width: none;
     margin: 20px auto;
   }
-  .detail-meta {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
 
   .form-area {
     padding: 16px;
@@ -817,13 +741,13 @@ a.list-button {
 
 .small-button.secondary {
   background: white;
-  color: #2563eb;
-  border: 2px solid #2563eb;
+  color: #005b49;
+  border: 2px solid #005b49;
   padding: 6px 12px;
 }
 
 .small-button.secondary:hover {
-  background: #eff6ff;
+  background: #eaf3f1;
 }
 
 
@@ -864,7 +788,7 @@ a.list-button {
 
 .nuisance-result.is-clear {
   background: #f0fdf4;
-  border-color: #10b981;
+  border-color: #005b49;
 }
 
 .nuisance-badge {
@@ -882,7 +806,7 @@ a.list-button {
 }
 
 .nuisance-badge.is-clear {
-  background: #10b981;
+  background: #005b49;
 }
 
 .nuisance-phone {
@@ -896,13 +820,6 @@ a.list-button {
   margin: 12px 0 0;
   font-size: 14px;
   color: #6b7280;
-}
-
-.nuisance-facts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 16px;
-  margin-top: 16px;
 }
 
 .nuisance-log-list {
@@ -940,47 +857,6 @@ a.list-button {
 
 
 /* 一覧のカード */
-
-.nuisance-card {
-  margin-top: 12px;
-  padding: 16px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-left: 4px solid #ef4444;
-  border-radius: 8px;
-}
-
-.nuisance-card-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.nuisance-count {
-  font-size: 14px;
-  font-weight: bold;
-  color: #ef4444;
-}
-
-.nuisance-company {
-  margin: 4px 0 0;
-  font-weight: 600;
-  color: #374151;
-}
-
-.nuisance-memo {
-  margin: 4px 0 0;
-  font-size: 14px;
-  color: #6b7280;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.nuisance-meta {
-  margin: 8px 0 0;
-  font-size: 13px;
-  color: #9ca3af;
-}
 
 
 /* 登録・編集フォーム */
@@ -1034,7 +910,7 @@ a.list-button {
 .search-area input {
   background: white;
   color: #1f2937;
-  border: 2px solid rgb(146, 186, 233);
+  border: 2px solid #9cc3bb;
   width: 100%;
   max-width: 100%;
 }
@@ -1074,78 +950,6 @@ a.list-button {
   gap: 10px;
 }
 
-.message-item {
-  display: flex;
-  align-items: stretch;
-  border: 1px solid #d1d5db;
-  border-left: 4px solid #2563eb;
-  border-radius: 8px;
-  background: white;
-}
-
-.message-item:hover {
-  background: #f8fafc;
-}
-
-.message-item-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 12px 14px;
-  color: inherit;
-  text-decoration: none;
-  text-align: left;
-}
-
-.message-item-date {
-  color: #9ca3af;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-
-.message-item-dest {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #1d4ed8;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.message-item-body {
-  color: #1f2937;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.message-item-delete {
-  align-self: center;
-  margin-right: 12px;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
-  border-radius: 10px;
-  box-shadow: none;
-}
-
-.message-item-delete:hover {
-  background: #fef2f2;
-}
-
 /* =========================
    電話先（企業名）
 ========================= */
@@ -1155,13 +959,6 @@ a.list-button {
   font-size: 14px;
   font-weight: normal;
   margin-left: 8px;
-}
-
-.message-item-company {
-  font-size: 17px;
-  font-weight: bold;
-  color: #111827;
-  word-break: break-word;
 }
 
 /* =========================
@@ -1195,76 +992,661 @@ a.list-button {
 
 
 /* =========================
-   ヘッダー内のボタン（グラデーションの上で見えるように白抜き）
+   ヘッダー内のボタン（薄い帯の上では、緑の枠線のボタン）
 ========================= */
 
-.header button {
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--ui-primary-dark);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-}
-
-.header button:hover {
-  background: #fff;
-  color: var(--ui-primary-dark);
-}
-
+.header button,
 .header .list-button {
-  background-color: rgba(255, 255, 255, 0.95);
+  background: #fff;
+  color: var(--ui-primary);
+  border: 1.5px solid var(--ui-primary);
+  box-shadow: none;
+}
+
+.header button:hover,
+.header .list-button:hover {
+  background: #eaf3f1;
   color: var(--ui-primary-dark);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
 }
 
 
 /* =========================
-   画面の移動タブ（切り替えスイッチ風）
+   画面の移動タブ（右向きの矢印。左から右へ進む）
+   ・いまの画面は、棒の先に、上下にはみ出す大きな矢じりが付いた矢印
+   ・ほかの画面は、薄い緑の矢印（シェブロン）
 ========================= */
 
 .nav-tabs {
+  --point: 16px;
+  --gap: 6px;
+  --head: 26px;
+  --flare: 10px;
   width: 600px;
   max-width: calc(100% - 32px);
-  box-sizing: border-box;
   margin: 24px auto -20px;
-  padding: 4px;
+  /* 矢印の形で切り取っても、影が残るように、まとめて影を付ける */
+  filter: drop-shadow(0 2px 4px rgba(0, 91, 73, 0.18));
+}
+
+.nav-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  gap: 4px;
-  border-radius: 999px;
-  background: #dde6f6;
-  box-shadow: inset 0 1px 3px rgba(37, 99, 235, 0.12);
+}
+
+.nav-step {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 2つ目以降は、前の矢印の先が、くぼみに入るように重ねる */
+.nav-step + .nav-step {
+  margin-left: calc(var(--gap) - var(--point));
 }
 
 .nav-tab {
-  flex: 1;
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 6px;
-  border-radius: 999px;
-  background: transparent;
-  color: #5b6b8a;
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 10px calc(var(--point) + 4px) 10px calc(var(--point) + 2px);
+  background: #dcebe8;
+  color: #3f5c56;
   font-size: 15px;
   font-weight: bold;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  /* 右向きの矢印（右が尖り、左が凹む） */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--point)) 0,
+    100% 50%,
+    calc(100% - var(--point)) 100%,
+    0 100%,
+    var(--point) 50%
+  );
+  transition: background 0.2s, color 0.2s;
+}
+
+/* 先頭は、左を平らにする */
+.nav-step:first-child .nav-tab {
+  padding-left: 16px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--point)) 0,
+    100% 50%,
+    calc(100% - var(--point)) 100%,
+    0 100%
+  );
+  border-radius: 14px 0 0 14px;
 }
 
 .nav-tab:hover {
+  background: #cfe3df;
   color: var(--ui-primary-dark);
-  background: rgba(255, 255, 255, 0.55);
 }
 
-.nav-tab-active,
-.nav-tab-active:hover {
-  background: var(--ui-primary);
+/* ---- いまの画面：棒＋上下にはみ出す矢じり ---- */
+
+.nav-step .nav-tab.nav-tab-active,
+.nav-step .nav-tab.nav-tab-active:hover {
+  z-index: 2;
+  background: transparent;
   color: #fff;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+  clip-path: none;
+  border-radius: 0;
+  padding-right: calc(var(--head) + 4px);
+}
+
+/* 棒の部分 */
+.nav-tab-active::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: calc(var(--head) - 1px);
+  background: var(--ui-primary);
+  border-radius: 14px 0 0 14px;
+}
+
+/* 矢じりの部分（棒より、上下に大きくはみ出す） */
+.nav-tab-active::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--flare) * -1);
+  bottom: calc(var(--flare) * -1);
+  right: 0;
+  width: var(--head);
+  background: var(--ui-primary);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* 2つ目以降は、左が凹んだ棒にする */
+.nav-step:not(:first-child) .nav-tab.nav-tab-active {
+  padding-left: calc(var(--point) + 2px);
+}
+
+.nav-step:not(:first-child) .nav-tab-active::before {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--point) 50%);
 }
 
 @media (max-width: 480px) {
-  .nav-tab {
-    padding: 10px 2px;
-    font-size: 12.5px;
+  .nav-tabs {
+    --point: 12px;
+    --gap: 4px;
+    --head: 20px;
+    --flare: 8px;
   }
+
+  .nav-tab {
+    font-size: 12.5px;
+    padding-right: calc(var(--point) + 2px);
+  }
+
+  .nav-step .nav-tab.nav-tab-active,
+  .nav-step .nav-tab.nav-tab-active:hover {
+    padding-right: calc(var(--head) + 2px);
+  }
+
+  .nav-step:first-child .nav-tab {
+    padding-left: 10px;
+  }
+}
+
+
+/* =========================
+   伝言のメモ（一覧）
+========================= */
+
+.memo {
+  border: 1px solid #bcd3cf;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #f3f8f7;
+  /* 淡いギンガムチェックの紙 */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 91, 73, 0.05) 0 12px,
+      transparent 12px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 91, 73, 0.05) 0 12px,
+      transparent 12px 24px
+    );
+  box-shadow: 0 2px 8px rgba(0, 91, 73, 0.08);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.memo:hover {
+  box-shadow: 0 6px 16px rgba(0, 91, 73, 0.16);
+  transform: translateY(-1px);
+}
+
+.memo-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  background: linear-gradient(135deg, var(--ui-header-from), var(--ui-header-to));
+  color: #fff;
+}
+
+.memo-title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.memo-date {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-variant-numeric: tabular-nums;
+}
+
+.memo-delete {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.memo-delete:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: none;
+}
+
+.memo-body {
+  display: block;
+  padding: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.memo-paper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px dashed #8fb5ac;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.memo-company {
+  font-size: 16px;
+  font-weight: bold;
+  color: #111827;
+  word-break: break-word;
+}
+
+.memo-text {
+  color: #1f2937;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.memo-from {
+  margin-top: 2px;
+  align-self: flex-end;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+@media (max-width: 480px) {
+  .memo-head {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  .memo-date {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+
+/* =========================
+   伝言の詳細（メモを大きく表示）
+========================= */
+
+.memo-detail:hover {
+  box-shadow: 0 2px 8px rgba(0, 91, 73, 0.08);
+  transform: none;
+}
+
+.memo-detail .memo-title {
+  font-size: 18px;
+}
+
+.memo-paper-detail {
+  gap: 18px;
+  padding: 18px 20px;
+}
+
+.memo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.memo-label {
+  font-size: 12px;
+  color: #6b7280;
+  letter-spacing: 0.04em;
+}
+
+.memo-paper-detail .memo-company {
+  font-size: 18px;
+}
+
+.memo-text-full {
+  color: #1f2937;
+  font-size: 17px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 迷惑電話チェックの結果で使う、項目名と値 */
+.detail-meta-label {
+  display: block;
+  font-size: 12px;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.detail-meta-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+
+/* =========================
+   文の途中で、変な位置で改行しないための書式
+   ・文節（phrase）の途中では折り返さない
+   ・折り返すときは、行の長さをそろえる
+========================= */
+
+.phrase {
+  display: inline-block;
+}
+
+.form-description {
+  text-wrap: balance;
+}
+
+/* 文と文の間の改行は、広い画面でだけ入れる（狭い画面では自然に折り返す） */
+.sentence-break {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .sentence-break {
+    display: inline;
+  }
+}
+
+
+/* =========================
+   迷惑番号の一覧（メモ形式）
+========================= */
+
+.memo-paper .nuisance-actions {
+  margin-top: 4px;
+}
+
+.memo-paper .small-button.secondary {
+  background: #fff;
+  color: #005b49;
+  border: 2px solid #005b49;
+}
+
+.memo-paper .small-button.secondary:hover {
+  background: #eaf3f1;
+  color: #00493a;
+}
+
+.memo-paper .nuisance-log-list {
+  margin-top: 8px;
+  border-top: 1px solid #d1e3dd;
+}
+
+.memo-paper .nuisance-log-list li {
+  border-bottom: 1px solid #d1e3dd;
+  color: #1f2937;
+}
+
+/* 確認画面：内容の改行をそのまま見せる */
+.confirm-body {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.confirm-company {
+  font-weight: bold;
+}
+
+
+
+
+/* =========================
+   迷惑番号のカード（検索結果と一覧で共通）
+   閉じた状態は、電話番号と会社名だけ
+========================= */
+
+.nuisance-hit {
+  margin-top: 24px;
+}
+
+.nuisance-hit .nuisance-badge {
+  margin-bottom: 10px;
+}
+
+.ncard {
+  margin-top: 10px;
+  border: 1px solid #bcd3cf;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #f3f8f7;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0, 91, 73, 0.05) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(90deg, rgba(0, 91, 73, 0.05) 0 12px, transparent 12px 24px);
+  box-shadow: 0 2px 8px rgba(0, 91, 73, 0.08);
+  text-align: left;
+}
+
+.ncard[open] {
+  box-shadow: 0 6px 16px rgba(0, 91, 73, 0.16);
+}
+
+.ncard-summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "phone chevron"
+    "company chevron";
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 2px;
+  padding: 10px 16px;
+  min-height: 44px;
+  background: linear-gradient(135deg, #267365, #005b49);
+  color: #fff;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ncard-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ncard-phone {
+  grid-area: phone;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+
+.ncard-company {
+  grid-area: company;
+  min-width: 0;
+  font-size: 14px;
+  color: #fff;
+  word-break: break-word;
+}
+
+.ncard-chevron {
+  grid-area: chevron;
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+
+.ncard[open] .ncard-chevron {
+  transform: rotate(-135deg);
+}
+
+.ncard-body {
+  padding: 12px;
+}
+
+.ncard-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ncard-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ncard-value {
+  color: #1f2937;
+  font-size: 15px;
+  font-weight: bold;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.ncard .memo-paper {
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .ncard-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================
+   使いやすさ（アクセシビリティ）
+   ・キーボード操作の目印
+   ・スマホで押しやすい大きさ（44px）
+   ・動きを減らす設定の人には、動かさない
+========================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #2d9d7f;
+  outline-offset: 3px;
+}
+
+@media (pointer: coarse) {
+
+  button,
+  .nav-tab,
+  .memo-delete,
+  .delete-button,
+  a.list-button {
+    min-height: 44px;
+  }
+
+  .memo-delete,
+  .delete-button {
+    min-width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* =========================
+   伝言一覧：どの伝言も、同じ大きさの枠にそろえる
+   ・電話先は1行、内容は2行までにして、あふれた分は「…」にする
+   ・全文は、伝言をひらいた詳細画面で読める
+========================= */
+
+.message-list .memo-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.5;
+}
+
+.message-list .memo-paper {
+  height: 140px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.message-list .memo-company {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.5em;
+  line-height: 1.5;
+}
+
+.memo-company-empty {
+  color: #9ca3af;
+  font-weight: normal;
+}
+
+.message-list .memo-text {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  min-height: 3.2em;
+}
+
+.message-list .memo-from {
+  margin-top: auto;
+}
+
+/* 迷惑番号のカード：会社名が長くても、2行の帯のまま */
+.ncard-company {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.nav-tab:focus-visible {
+  outline-offset: -4px;
+  outline-color: #ffffff;
+  box-shadow: inset 0 0 0 3px #2d9d7f;
 }

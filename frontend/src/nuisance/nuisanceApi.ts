@@ -1,11 +1,17 @@
 /*
- * 迷惑番号リスト：仮データ版
+ * 迷惑番号リスト
  *
- * いまは AWS に接続せず、このブラウザの localStorage に保存します。
- * 関数はすべて async(Promise を返す)にしてあるので、
- * 後で AWS の API に置き換えるときは、この中身だけ fetch に変えれば
- * 画面側(pages)は変更せずに済みます。
+ * 接続先によって保存先が変わる（api.ts の IS_MOCK で判定）。
+ *   仮データ（npm run dev の既定） … このブラウザの localStorage
+ *   テスト／本番               … API（/nuisance …）。DynamoDB に保存し、全員で共有する
+ *
+ * 画面（pages）は、どちらの場合も同じ関数を呼ぶ。
  */
+
+import { apiFetch, IS_MOCK } from "../api";
+import { nowJst } from "../time";
+
+export { nowJst };
 
 export type CallLog = {
   calledAt: string;
@@ -117,29 +123,6 @@ export function formatPhone(digits: string): string {
   return digits;
 }
 
-/* 日本時間の「2026/10/08 11:57:00」形式(伝言の受電日時と同じ形式) */
-export function nowJst(): string {
-
-  const parts = new Intl.DateTimeFormat("ja-JP", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(new Date());
-
-  const get = (type: string) =>
-    parts.find((p) => p.type === type)?.value ?? "";
-
-  return (
-    `${get("year")}/${get("month")}/${get("day")} ` +
-    `${get("hour")}:${get("minute")}:${get("second")}`
-  );
-}
-
 /* 登録フォームで保存している「自分の名前」を流用する */
 export function getSavedReceiverName(): string {
 
@@ -208,17 +191,25 @@ function sortByLastCalled(list: NuisanceNumber[]): NuisanceNumber[] {
 
 }
 
+export type CreateInput = {
+  phoneNumber: string;
+  companyName: string;
+  memo: string;
+  recordCall: boolean;
+  receiverName: string;
+};
+
 /*
  * ==========================================
  * ここから下が「API」。後で AWS に置き換える部分
  * ==========================================
  */
 
-export async function listNuisance(): Promise<NuisanceNumber[]> {
+async function mockList(): Promise<NuisanceNumber[]> {
   return sortByLastCalled(load());
 }
 
-export async function findNuisance(
+async function mockFind(
   rawPhone: string
 ): Promise<NuisanceNumber | null> {
 
@@ -227,13 +218,7 @@ export async function findNuisance(
   return load().find((n) => n.phoneNumber === key) ?? null;
 }
 
-export async function createNuisance(input: {
-  phoneNumber: string;
-  companyName: string;
-  memo: string;
-  recordCall: boolean;
-  receiverName: string;
-}): Promise<void> {
+async function mockCreate(input: CreateInput): Promise<void> {
 
   const key = normalizePhone(input.phoneNumber);
 
@@ -271,7 +256,7 @@ export async function createNuisance(input: {
   save(list);
 }
 
-export async function updateNuisance(
+async function mockUpdate(
   phoneNumber: string,
   patch: { companyName: string; memo: string }
 ): Promise<void> {
@@ -289,14 +274,14 @@ export async function updateNuisance(
   save(list);
 }
 
-export async function deleteNuisance(
+async function mockDelete(
   phoneNumber: string
 ): Promise<void> {
 
   save(load().filter((n) => n.phoneNumber !== phoneNumber));
 }
 
-export async function addCallLog(
+async function mockAddLog(
   phoneNumber: string,
   log: { receiverName: string; note: string }
 ): Promise<NuisanceNumber | null> {
@@ -319,3 +304,155 @@ export async function addCallLog(
 
   return target;
 }
+
+/*
+ * ==========================================
+ * API 版（テスト／本番）
+ * ==========================================
+ */
+
+async function request(
+  path: string,
+  init?: RequestInit
+): Promise<Response> {
+
+  return apiFetch(path, {
+    ...init,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+}
+
+async function errorMessage(response: Response): Promise<string> {
+
+  try {
+    const body = (await response.json()) as { message?: string };
+    if (body.message) {
+      return body.message;
+    }
+  } catch {
+    /* 本文が JSON でないときは下の文言を使う */
+  }
+
+  return "通信に失敗しました。もう一度お試しください";
+}
+
+async function failIfNotOk(response: Response): Promise<void> {
+
+  if (!response.ok) {
+    throw new Error(await errorMessage(response));
+  }
+}
+
+function phonePath(phone: string): string {
+  return `/nuisance/${encodeURIComponent(normalizePhone(phone))}`;
+}
+
+async function apiList(): Promise<NuisanceNumber[]> {
+
+  const response = await request("/nuisance");
+  await failIfNotOk(response);
+
+  return sortByLastCalled((await response.json()) as NuisanceNumber[]);
+}
+
+async function apiFind(rawPhone: string): Promise<NuisanceNumber | null> {
+
+  const response = await request(phonePath(rawPhone));
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  await failIfNotOk(response);
+
+  return (await response.json()) as NuisanceNumber;
+}
+
+async function apiCreate(input: CreateInput): Promise<void> {
+
+  const key = normalizePhone(input.phoneNumber);
+
+  if (key.length < MIN_PHONE_DIGITS || key.length > MAX_PHONE_DIGITS) {
+    throw new Error("電話番号の桁数を確認してください");
+  }
+
+  const response = await request("/nuisance", {
+    method: "POST",
+    body: JSON.stringify({ ...input, phoneNumber: key }),
+  });
+
+  await failIfNotOk(response);
+}
+
+async function apiUpdate(
+  phoneNumber: string,
+  patch: { companyName: string; memo: string }
+): Promise<void> {
+
+  const response = await request(phonePath(phoneNumber), {
+    method: "PUT",
+    body: JSON.stringify(patch),
+  });
+
+  await failIfNotOk(response);
+}
+
+async function apiDelete(phoneNumber: string): Promise<void> {
+
+  const response = await request(phonePath(phoneNumber), {
+    method: "DELETE",
+  });
+
+  await failIfNotOk(response);
+}
+
+async function apiAddLog(
+  phoneNumber: string,
+  log: { receiverName: string; note: string }
+): Promise<NuisanceNumber | null> {
+
+  const response = await request(`${phonePath(phoneNumber)}/logs`, {
+    method: "POST",
+    body: JSON.stringify(log),
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  await failIfNotOk(response);
+
+  return (await response.json()) as NuisanceNumber;
+}
+
+/*
+ * ==========================================
+ * 画面から呼ぶ関数（仮データか API かをここで切り替える）
+ * ==========================================
+ */
+
+export const listNuisance = (): Promise<NuisanceNumber[]> =>
+  IS_MOCK ? mockList() : apiList();
+
+export const findNuisance = (
+  rawPhone: string
+): Promise<NuisanceNumber | null> =>
+  IS_MOCK ? mockFind(rawPhone) : apiFind(rawPhone);
+
+export const createNuisance = (input: CreateInput): Promise<void> =>
+  IS_MOCK ? mockCreate(input) : apiCreate(input);
+
+export const updateNuisance = (
+  phoneNumber: string,
+  patch: { companyName: string; memo: string }
+): Promise<void> =>
+  IS_MOCK ? mockUpdate(phoneNumber, patch) : apiUpdate(phoneNumber, patch);
+
+export const deleteNuisance = (phoneNumber: string): Promise<void> =>
+  IS_MOCK ? mockDelete(phoneNumber) : apiDelete(phoneNumber);
+
+export const addCallLog = (
+  phoneNumber: string,
+  log: { receiverName: string; note: string }
+): Promise<NuisanceNumber | null> =>
+  IS_MOCK ? mockAddLog(phoneNumber, log) : apiAddLog(phoneNumber, log);

@@ -14,7 +14,7 @@
  * npm run build（本番ビルド）のときは、必ず本番 API に繋がる。
  */
 
-import { nowJst } from "./nuisance/nuisanceApi";
+import { nowJst } from "./time";
 
 const PROD_API_BASE =
   "https://kn3somrtp6.execute-api.ap-northeast-1.amazonaws.com";

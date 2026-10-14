@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import { splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
+import PersonIcon from "../components/PersonIcon";
 
 type Message = {
   messageId: string;
@@ -265,79 +266,59 @@ function DetailPage() {
             伝言詳細
           </h1>
 
-          <Link
-            to="/list"
-            className="list-button"
-          >
-            一覧へ
-          </Link>
-
         </div>
 
       </div>
 
       <div className="form-area">
 
-        <div className="detail-message">
+        <div className="memo memo-detail">
 
-          {/*
-           * 受電日時・伝言先・受電者を
-           * 横並びのメタ情報として表示
-           */}
-          <div className="detail-meta">
+          <div className="memo-head">
 
-            <div>
-              <span className="detail-meta-label">
-                受電日時
-              </span>
-              <span className="detail-meta-value">
-                {message.registeredAt}
-              </span>
-            </div>
+            <span className="memo-title">
+              <PersonIcon />
+              {message.destination} 宛
+            </span>
 
-            {company && (
+            <span className="memo-date">
+              {message.registeredAt}
+            </span>
 
-              <div>
-                <span className="detail-meta-label">
-                  電話先
+          </div>
+
+          <div className="memo-body">
+
+            <div className="memo-paper memo-paper-detail">
+
+              {company && (
+
+                <div className="memo-field">
+                  <span className="memo-label">
+                    電話先
+                  </span>
+                  <span className="memo-company">
+                    {company}
+                  </span>
+                </div>
+
+              )}
+
+              <div className="memo-field">
+                <span className="memo-label">
+                  伝言内容
                 </span>
-                <span className="detail-meta-value">
-                  {company}
-                </span>
+                <div className="memo-text-full">
+                  {body}
+                </div>
               </div>
 
-            )}
+              <span className="memo-from">
+                受電者：{message.receiverName}
+              </span>
 
-            <div>
-              <span className="detail-meta-label">
-                伝言先
-              </span>
-              <span className="detail-meta-value">
-                {message.destination}
-              </span>
             </div>
 
-            <div>
-              <span className="detail-meta-label">
-                受電者
-              </span>
-              <span className="detail-meta-value">
-                {message.receiverName}
-              </span>
-            </div>
-
-          </div>
-
-          {/*
-           * 伝言内容は主役として
-           * 見出し＋アクセント枠で目立たせる
-           */}
-          <div className="detail-section-title">
-            伝言内容
-          </div>
-
-          <div className="detail-body">
-            {body}
           </div>
 
         </div>
@@ -348,7 +329,7 @@ function DetailPage() {
             to="/list"
             className="detail-list-button"
           >
-            一覧へ戻る
+            ← 一覧へ戻る
           </Link>
 
         </div>

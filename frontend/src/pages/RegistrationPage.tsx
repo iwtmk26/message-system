@@ -121,7 +121,7 @@ function RegistrationPage() {
 
         <div className="header-content">
 
-          <h1>登録フォーム</h1>
+          <h1>伝言を入力する</h1>
 
         </div>
 
@@ -130,7 +130,9 @@ function RegistrationPage() {
       <div className="form-area">
 
         <p className="form-description">
-          採用・営業電話の伝言内容を入力してください。
+          <span className="phrase">採用・営業電話の</span>
+          <span className="phrase">伝言内容を</span>
+          <span className="phrase">入力してください。</span>
         </p>
 
         <div className="form-group">

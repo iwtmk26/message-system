@@ -6,17 +6,17 @@ import { NavLink, useLocation } from "react-router-dom";
  */
 
 const TABS = [
+  {
+    to: "/nuisance",
+    label: "迷惑電話チェック",
+    match: (p: string) => p.startsWith("/nuisance"),
+  },
   { to: "/", label: "登録フォーム", match: (p: string) => p === "/" },
   {
     to: "/list",
     label: "伝言一覧",
     match: (p: string) =>
       p === "/list" || p.startsWith("/detail/"),
-  },
-  {
-    to: "/nuisance",
-    label: "迷惑電話チェック",
-    match: (p: string) => p.startsWith("/nuisance"),
   },
 ];
 
@@ -29,24 +29,31 @@ function NavTabs() {
   }
 
   return (
-    <nav className="nav-tabs" aria-label="画面の切り替え">
+    <nav className="nav-tabs" aria-label="業務の流れ">
 
-      {TABS.map((tab) => (
+      <ol className="nav-steps">
 
-        <NavLink
-          key={tab.to}
-          to={tab.to}
-          className={
-            tab.match(pathname)
-              ? "nav-tab nav-tab-active"
-              : "nav-tab"
-          }
-          aria-current={tab.match(pathname) ? "page" : undefined}
-        >
-          {tab.label}
-        </NavLink>
+        {TABS.map((tab) => (
 
-      ))}
+          <li key={tab.to} className="nav-step">
+
+            <NavLink
+              to={tab.to}
+              className={
+                tab.match(pathname)
+                  ? "nav-tab nav-tab-active"
+                  : "nav-tab"
+              }
+              aria-current={tab.match(pathname) ? "page" : undefined}
+            >
+              {tab.label}
+            </NavLink>
+
+          </li>
+
+        ))}
+
+      </ol>
 
     </nav>
   );

@@ -1,4 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
+import { API_ENV } from "../api";
 
 function CompletePage() {
 
@@ -35,8 +36,12 @@ function CompletePage() {
         </div>
 
         <p className="complete-message">
-          Teamsへ通知しました。
+          {API_ENV === "prod" && "Teamsへ通知しました。"}
+          {API_ENV === "test" && "テスト用チャネル（99_テスト）へ通知しました。"}
+          {API_ENV === "mock" && "テストモードのため、Teamsには通知していません。"}
         </p>
+
+        {API_ENV === "prod" && (
 
         <a
           href="https://teams.microsoft.com/l/channel/19%3Ae19e8e0947924ee58a069f9aea89d25c%40thread.tacv2/71_%E4%BC%9D%E8%A8%80%E3%83%A1%E3%83%A2?groupId=5f28bedb-2023-4e45-8647-6322dd6db437&tenantId=90d75b8f-615b-463e-9492-5cb3672bad9e"
@@ -46,6 +51,8 @@ function CompletePage() {
         >
           Teamsで確認する →
         </a>
+
+        )}
 
         <br />
 

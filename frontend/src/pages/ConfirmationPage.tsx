@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { apiFetch } from "../api";
+import { splitBody } from "../messageFormat";
 
 function ConfirmationPage() {
 
@@ -61,6 +62,8 @@ function ConfirmationPage() {
     }
   };
 
+  const { company, body } = splitBody(messageBody ?? "");
+
   return (
     <div className="container">
 
@@ -76,9 +79,18 @@ function ConfirmationPage() {
 
         <div className="confirm-card">
 
+          {company && (
+
+            <div className="confirm-item">
+              <p className="label">電話先</p>
+              <p className="confirm-company">{company}</p>
+            </div>
+
+          )}
+
           <div className="confirm-item">
             <p className="label">伝言内容</p>
-            <p>{messageBody}</p>
+            <p className="confirm-body">{body}</p>
           </div>
 
           <div className="confirm-item">

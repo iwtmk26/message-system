@@ -137,7 +137,7 @@ function ListPage() {
         <div className="header-content">
 
           <h1>
-            伝言一覧
+            受け取った伝言
           </h1>
 
         </div>
@@ -199,50 +199,71 @@ function ListPage() {
 
               <li
                 key={message.messageId}
-                className="message-item"
+                className="memo"
               >
 
-                <Link
-                  to={`/detail/${message.messageId}`}
-                  className="message-item-main"
-                >
+                <div className="memo-head">
 
-                  <span className="message-item-dest">
+                  <Link
+                    to={`/detail/${message.messageId}`}
+                    className="memo-title"
+                  >
                     <PersonIcon />
                     {message.destination} 宛
-                  </span>
+                  </Link>
 
-                  {company && (
-
-                    <span className="message-item-company">
-                      {company}
-                    </span>
-
-                  )}
-
-                  <span className="message-item-body">
-                    {body}
-                  </span>
-
-                  <span className="message-item-date">
+                  <span className="memo-date">
                     {message.registeredAt}
                   </span>
 
-                </Link>
+                  <button
+                    type="button"
+                    className="memo-delete"
+                    aria-label="この伝言を削除"
+                    title="削除"
+                    onClick={() =>
+                      handleDelete(
+                        message.messageId
+                      )
+                    }
+                  >
+                    <TrashIcon />
+                  </button>
 
-                <button
-                  type="button"
-                  className="message-item-delete"
-                  aria-label="この伝言を削除"
-                  title="削除"
-                  onClick={() =>
-                    handleDelete(
-                      message.messageId
-                    )
-                  }
+                </div>
+
+                <Link
+                  to={`/detail/${message.messageId}`}
+                  className="memo-body"
                 >
-                  <TrashIcon />
-                </button>
+
+                  <span className="memo-paper">
+
+                    <span
+                      className={
+                        company
+                          ? "memo-company"
+                          : "memo-company memo-company-empty"
+                      }
+                    >
+                      {company || "（電話先なし）"}
+                    </span>
+
+                    <span className="memo-text">
+                      {body}
+                    </span>
+
+                    {message.receiverName && (
+
+                      <span className="memo-from">
+                        受電：{message.receiverName}
+                      </span>
+
+                    )}
+
+                  </span>
+
+                </Link>
 
               </li>
 
