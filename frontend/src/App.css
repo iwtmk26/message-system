@@ -72,7 +72,7 @@ label {
 }
 
 .required {
-  color: red;
+  color: #b91c1c;
   font-size: 14px;
   margin-left: 8px;
 }
@@ -117,7 +117,7 @@ select:focus {
 }
 
 ::placeholder {
-  color: #9ca3af;
+  color: #5b6573;
 }
 
 .form-group {
@@ -305,7 +305,7 @@ button:active {
 ========================= */
 
 .error-message {
-  color: red;
+  color: #b91c1c;
   font-size: 14px;
   font-weight: bold;
   margin-top: 16px;
@@ -420,7 +420,7 @@ button:active {
 }
 
 .search-area input::placeholder {
-  color: #9ca3af;
+  color: #5b6573;
 }
 
 
@@ -587,7 +587,7 @@ button:active {
   align-items: center;
   justify-content: center;
 
-  background-color: #ef4444;
+  background-color: #dc2626;
   color: white;
 
   border: none;
@@ -802,7 +802,7 @@ a.list-button {
 }
 
 .nuisance-badge.is-hit {
-  background: #ef4444;
+  background: #dc2626;
 }
 
 .nuisance-badge.is-clear {
@@ -916,7 +916,7 @@ a.list-button {
 }
 
 .search-area input::placeholder {
-  color: #9ca3af;
+  color: #5b6573;
 }
 
 .list-header {
@@ -1342,21 +1342,6 @@ a.list-button {
   word-break: break-word;
 }
 
-/* 迷惑電話チェックの結果で使う、項目名と値 */
-.detail-meta-label {
-  display: block;
-  font-size: 12px;
-  color: #9ca3af;
-  letter-spacing: 0.02em;
-  margin-bottom: 4px;
-}
-
-.detail-meta-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1f2937;
-  word-break: break-word;
-}
 
 
 /* =========================
@@ -1623,7 +1608,7 @@ summary:focus-visible {
 }
 
 .memo-company-empty {
-  color: #9ca3af;
+  color: #6b7280;
   font-weight: normal;
 }
 
