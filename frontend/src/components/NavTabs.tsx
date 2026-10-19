@@ -7,11 +7,6 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const TABS = [
   {
-    to: "/nuisance",
-    label: "迷惑電話チェック",
-    match: (p: string) => p.startsWith("/nuisance"),
-  },
-  {
     to: "/register",
     label: "登録フォーム",
     match: (p: string) => p === "/register",
@@ -21,6 +16,11 @@ const TABS = [
     label: "伝言一覧",
     match: (p: string) =>
       p === "/list" || p.startsWith("/detail/"),
+  },
+  {
+    to: "/nuisance/list",
+    label: "迷惑番号一覧",
+    match: (p: string) => p.startsWith("/nuisance"),
   },
 ];
 

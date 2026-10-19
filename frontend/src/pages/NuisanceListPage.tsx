@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import NuisanceCard from "../components/NuisanceCard";
 import { IS_MOCK } from "../api";
 
@@ -24,7 +24,6 @@ type FormState = {
 
 function NuisanceListPage() {
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   /*
@@ -239,19 +238,6 @@ function NuisanceListPage() {
         <div className="header-content">
 
           <h1>迷惑番号一覧</h1>
-
-          <div className="header-actions">
-
-            <button
-              className="list-button"
-              onClick={() =>
-                navigate("/nuisance")
-              }
-            >
-              迷惑電話チェック
-            </button>
-
-          </div>
 
         </div>
 

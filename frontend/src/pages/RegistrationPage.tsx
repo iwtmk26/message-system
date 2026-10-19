@@ -2,6 +2,29 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { composeBody, splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
+import NuisanceCheck from "../components/NuisanceCheck";
+import {
+  formatPhone,
+  normalizePhone,
+  MIN_PHONE_DIGITS,
+} from "../nuisance/nuisanceApi";
+
+/* 本文に、電話番号がなければ、最後に「TEL：番号」の1行を足す */
+function withPhone(body: string, phone: string): string {
+
+  const digits = normalizePhone(phone);
+
+  if (digits.length < MIN_PHONE_DIGITS) {
+    return body;
+  }
+
+  // 本文に、同じ番号がすでに書いてあれば、足さない
+  if (normalizePhone(body).includes(digits)) {
+    return body;
+  }
+
+  return `${body.trimEnd()}\nTEL：${formatPhone(digits)}`;
+}
 
 type Member = {
   memberId: string;
@@ -15,6 +38,10 @@ function RegistrationPage() {
 
   const initial = splitBody(
     location.state?.messageBody ?? ""
+  );
+
+  const [phone, setPhone] = useState(
+    location.state?.phone ?? ""
   );
 
   const [companyName, setCompanyName] =
@@ -104,10 +131,11 @@ function RegistrationPage() {
       state: {
         messageBody: composeBody(
           companyName,
-          messageBody
+          withPhone(messageBody, phone)
         ),
         receiverName,
         destination,
+        phone,
       },
     });
 
@@ -134,6 +162,31 @@ function RegistrationPage() {
           <span className="phrase">伝言内容を</span>
           <span className="phrase">入力してください。</span>
         </p>
+
+        <div className="form-group">
+
+          <label htmlFor="phone-input">
+            電話番号
+            <span className="optional">
+              入力すると、迷惑番号か自動で確認します
+            </span>
+          </label>
+
+          <input
+            id="phone-input"
+            type="tel"
+            inputMode="tel"
+            autoFocus
+            value={phone}
+            onChange={(e) =>
+              setPhone(e.target.value)
+            }
+            placeholder="例：03-1234-5678"
+          />
+
+          <NuisanceCheck phone={phone} />
+
+        </div>
 
         <div className="form-group">
 

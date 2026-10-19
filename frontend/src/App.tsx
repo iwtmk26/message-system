@@ -5,7 +5,6 @@ import ConfirmationPage from "./pages/ConfirmationPage";
 import CompletionPage from "./pages/CompletionPage.tsx";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
-import NuisanceSearchPage from "./pages/NuisanceSearchPage";
 import NuisanceListPage from "./pages/NuisanceListPage";
 import EnvBanner from "./components/EnvBanner";
 import NavTabs from "./components/NavTabs";
@@ -24,7 +23,7 @@ function App() {
         {/* 業務は、まず番号の確認から始まるので、最初の画面は「迷惑電話チェック」 */}
         <Route
           path="/"
-          element={<Navigate to="/nuisance" replace />}
+          element={<Navigate to="/register" replace />}
         />
 
         <Route
@@ -52,9 +51,10 @@ function App() {
           element={<DetailPage />}
         />
 
+        {/* 旧「迷惑電話チェック」の画面は、登録フォームの電話番号の欄に統合した */}
         <Route
           path="/nuisance"
-          element={<NuisanceSearchPage />}
+          element={<Navigate to="/register" replace />}
         />
 
         <Route

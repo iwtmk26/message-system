@@ -8,7 +8,7 @@ function ConfirmationPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { messageBody, receiverName, destination } =
+  const { messageBody, receiverName, destination, phone } =
     location.state || {};
 
   const [isSubmitting, setIsSubmitting] =
@@ -117,6 +117,7 @@ function ConfirmationPage() {
                   messageBody,
                   receiverName,
                   destination,
+                  phone,
                 },
               })
             }
