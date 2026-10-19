@@ -1,5 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { API_ENV } from "../api";
+import { notifyText } from "../messageApi";
 
 function CompletePage() {
 
@@ -36,9 +37,7 @@ function CompletePage() {
         </div>
 
         <p className="complete-message">
-          {API_ENV === "prod" && "Teamsへ通知しました。"}
-          {API_ENV === "test" && "テスト用チャネル（99_テスト）へ通知しました。"}
-          {API_ENV === "mock" && "テストモードのため、Teamsには通知していません。"}
+          {notifyText()}
         </p>
 
         {API_ENV === "prod" && (

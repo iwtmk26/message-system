@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { composeBody, splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
 import NuisanceCheck from "../components/NuisanceCheck";
+import { postMessage } from "../messageApi";
 import {
   formatPhone,
   normalizePhone,
@@ -102,26 +103,79 @@ function RegistrationPage() {
 
   }, []);
 
-  const handleSubmit = () => {
+  /* 必須項目の確認。足りないときは、その文言を返す */
+  const validate = (): string => {
 
     if (!messageBody) {
-      setErrorMessage(
-        "伝言内容を入力してください"
-      );
-      return;
+      return "伝言内容を入力してください";
     }
 
     if (!receiverName) {
-      setErrorMessage(
-        "自分の名前を入力してください"
-      );
-      return;
+      return "自分の名前を入力してください";
     }
 
     if (!destination) {
-      setErrorMessage(
-        "伝言先を選択してください"
+      return "伝言先を選択してください";
+    }
+
+    return "";
+  };
+
+  const [registering, setRegistering] = useState(false);
+  const [directError, setDirectError] = useState("");
+
+  /* 「このまま伝言を登録する」：確認画面を通らずに、登録して、伝言一覧へ */
+  const handleDirectRegister = async () => {
+
+    setDirectError("");
+
+    const problem = validate();
+
+    if (problem) {
+      setDirectError(problem);
+      return;
+    }
+
+    setRegistering(true);
+
+    try {
+
+      await postMessage({
+        messageBody: composeBody(
+          companyName,
+          withPhone(messageBody, phone)
+        ),
+        receiverName,
+        destination,
+      });
+
+      localStorage.setItem("receiverName", receiverName);
+
+      navigate("/list", {
+        state: { registered: { destination, receiverName } },
+      });
+
+    } catch (error) {
+
+      setDirectError(
+        error instanceof Error
+          ? error.message
+          : "伝言を登録できませんでした。もう一度お試しください"
       );
+
+    } finally {
+
+      setRegistering(false);
+    }
+
+  };
+
+  const handleSubmit = () => {
+
+    const problem = validate();
+
+    if (problem) {
+      setErrorMessage(problem);
       return;
     }
 
@@ -184,7 +238,14 @@ function RegistrationPage() {
             placeholder="例：03-1234-5678"
           />
 
-          <NuisanceCheck phone={phone} />
+          <NuisanceCheck
+            phone={phone}
+            receiverName={receiverName}
+            companyName={companyName}
+            onRegisterMessage={handleDirectRegister}
+            registeringMessage={registering}
+            messageError={directError}
+          />
 
         </div>
 

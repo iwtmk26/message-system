@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
+import { notifyText } from "../messageApi";
 import TrashIcon from "../components/TrashIcon";
 import PersonIcon from "../components/PersonIcon";
 
@@ -14,6 +15,12 @@ type Message = {
 };
 
 function ListPage() {
+
+  // 「このまま伝言を登録する」で登録した直後だけ、お知らせを出す
+  const location = useLocation();
+
+  const registered: { destination: string; receiverName: string } | null =
+    location.state?.registered ?? null;
 
   const [messages, setMessages] =
     useState<Message[]>([]);
@@ -145,6 +152,18 @@ function ListPage() {
       </div>
 
       <div className="form-area">
+
+        {registered && (
+
+          <p className="registered-notice" role="status">
+            <strong>
+              {registered.destination} 宛の伝言を登録しました。
+            </strong>
+            {" "}
+            {notifyText()}
+          </p>
+
+        )}
 
         <div className="search-area">
 
