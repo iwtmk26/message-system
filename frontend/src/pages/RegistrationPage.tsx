@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { composeBody, splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
 import NuisanceCheck from "../components/NuisanceCheck";
+import { CheckIcon } from "../components/Icons";
 import { postMessage } from "../messageApi";
 import {
   formatPhone,
@@ -122,17 +123,16 @@ function RegistrationPage() {
   };
 
   const [registering, setRegistering] = useState(false);
-  const [directError, setDirectError] = useState("");
 
   /* 「このまま伝言を登録する」：確認画面を通らずに、登録して、伝言一覧へ */
   const handleDirectRegister = async () => {
 
-    setDirectError("");
+    setErrorMessage("");
 
     const problem = validate();
 
     if (problem) {
-      setDirectError(problem);
+      setErrorMessage(problem);
       return;
     }
 
@@ -157,7 +157,7 @@ function RegistrationPage() {
 
     } catch (error) {
 
-      setDirectError(
+      setErrorMessage(
         error instanceof Error
           ? error.message
           : "伝言を登録できませんでした。もう一度お試しください"
@@ -242,9 +242,6 @@ function RegistrationPage() {
             phone={phone}
             receiverName={receiverName}
             companyName={companyName}
-            onRegisterMessage={handleDirectRegister}
-            registeringMessage={registering}
-            messageError={directError}
           />
 
         </div>
@@ -379,18 +376,40 @@ TEL：03-XXXX-XXXX`}
 
         {errorMessage && (
 
-          <p className="error-message">
+          <p className="error-message" role="alert">
             {errorMessage}
           </p>
 
         )}
 
-        <button
-          className="register-button"
-          onClick={handleSubmit}
-        >
-          確認して登録する
-        </button>
+        {/* 主な操作は、緑のボタン1つ。確認画面を通る登録は、副次的な操作 */}
+        <div className="form-actions">
+
+          <button
+            type="button"
+            className="btn btn-green btn-lg"
+            onClick={handleDirectRegister}
+            disabled={registering}
+            aria-busy={registering}
+          >
+            {registering ? (
+              <span className="spinner" aria-hidden="true" />
+            ) : (
+              <CheckIcon />
+            )}
+            {registering ? "登録しています…" : "登録する"}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-ghost btn-lg"
+            onClick={handleSubmit}
+            disabled={registering}
+          >
+            確認してから登録する
+          </button>
+
+        </div>
 
       </div>
 

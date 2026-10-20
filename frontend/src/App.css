@@ -1961,3 +1961,49 @@ button.registered-notice-close:hover {
     height: 44px;
   }
 }
+
+
+/* 登録フォームの下のボタン：主な操作（緑）は1つ。確認を通る登録は、白地に緑の枠 */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+button.btn.btn-lg {
+  min-height: 52px;
+  padding: 12px 26px;
+  font-size: 17px;
+  border-radius: 14px;
+}
+
+.form-actions .btn-green {
+  min-width: 220px;
+}
+
+@media (max-width: 520px) {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+
+/* 迷惑番号の選択肢が1つになったので、左に寄せる */
+.check-choices {
+  grid-template-columns: 1fr;
+}
+
+.check-choice {
+  align-items: flex-start;
+}
+
+@media (max-width: 520px) {
+  .check-choice {
+    align-items: stretch;
+  }
+}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import NuisanceCard from "./NuisanceCard";
-import { BanIcon, CheckCircleIcon, CheckIcon, WarnIcon } from "./Icons";
+import { BanIcon, CheckCircleIcon, WarnIcon } from "./Icons";
 import {
   MIN_PHONE_DIGITS,
   createNuisance,
@@ -18,9 +18,8 @@ import {
  *
  * ・番号が8桁以上になったら、入力が止まって0.5秒後に確認する
  * ・登録されている → 赤い札と、迷惑番号のカード（着信の記録もできる）
- * ・登録なし → 緑の表示と、次の2つ（どちらも、画面を移らずに、その場で行う）
- *     「このまま伝言を登録する」… 確認画面を飛ばして、伝言を登録する
- *     「迷惑番号として登録する」… 会社名・メモを入れて、迷惑番号に登録する
+ * ・登録なし → 緑の表示と、「迷惑番号として登録する」（黄のボタン。その場で登録する）
+ *     伝言の登録は、フォームの下の緑のボタンで行う（ここには、置かない）
  */
 
 const WAIT_MS = 500;
@@ -36,19 +35,12 @@ type Props = {
   /* 登録フォームで入力中の「自分の名前」「電話先」。迷惑番号の登録に使う */
   receiverName: string;
   companyName: string;
-  /* 「このまま伝言を登録する」。登録フォーム側で、入力の確認と送信を行う */
-  onRegisterMessage: () => void;
-  registeringMessage: boolean;
-  messageError: string;
 };
 
 function NuisanceCheck({
   phone,
   receiverName,
   companyName,
-  onRegisterMessage,
-  registeringMessage,
-  messageError,
 }: Props) {
 
   const [state, setState] = useState<State>({ kind: "idle" });
@@ -249,31 +241,6 @@ function NuisanceCheck({
             <div className="check-choice">
 
               <span className="check-choice-label">
-                ふつうの電話のとき
-              </span>
-
-              <button
-                type="button"
-                className="btn btn-green"
-                onClick={onRegisterMessage}
-                disabled={registeringMessage}
-                aria-busy={registeringMessage}
-              >
-                {registeringMessage ? (
-                  <span className="spinner" aria-hidden="true" />
-                ) : (
-                  <CheckIcon />
-                )}
-                {registeringMessage
-                  ? "登録しています…"
-                  : "このまま伝言を登録する"}
-              </button>
-
-            </div>
-
-            <div className="check-choice">
-
-              <span className="check-choice-label">
                 迷惑電話だったとき
               </span>
 
@@ -291,13 +258,6 @@ function NuisanceCheck({
 
           </div>
 
-          {messageError && (
-
-            <p className="error-message check-clear-error" role="alert">
-              {messageError}
-            </p>
-
-          )}
 
           {formOpen && (
 
