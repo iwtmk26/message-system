@@ -30,8 +30,10 @@ resource "aws_lambda_function" "message_api_tf" {
 
   environment {
     variables = {
-      TEAMS_EMAIL = "c9453f82.gravityoffice365.onmicrosoft.com@jp.teams.ms"
-      FROM_EMAIL  = "taketo.sato@gravityoffice365.onmicrosoft.com"
+      # 迷惑番号の表の名前（Messages・Members は、未設定のとき、今の名前が使われる）
+      NUISANCE_TABLE = aws_dynamodb_table.nuisance.name
+      TEAMS_EMAIL    = "c9453f82.gravityoffice365.onmicrosoft.com@jp.teams.ms"
+      FROM_EMAIL     = "taketo.sato@gravityoffice365.onmicrosoft.com"
     }
   }
 }
@@ -51,6 +53,7 @@ resource "aws_apigatewayv2_api" "message_api" {
     allow_methods = [
       "GET",
       "POST",
+      "PUT",
       "DELETE",
       "OPTIONS"
     ]
@@ -217,6 +220,41 @@ resource "aws_apigatewayv2_route" "delete_messages" {
   api_id = aws_apigatewayv2_api.message_api.id
 
   route_key = "DELETE /messages"
+
+  target = "integrations/${aws_apigatewayv2_integration.message_api.id}"
+}
+# =========================================================
+# 迷惑番号（2026-10 追加）
+# 本番へ反映するときは、docs/リリース手順書.md の手順に従う。
+# =========================================================
+
+resource "aws_dynamodb_table" "nuisance" {
+
+  name         = "NuisanceNumbers"
+  billing_mode = "PAY_PER_REQUEST"
+
+  hash_key = "phoneNumber"
+
+  attribute {
+    name = "phoneNumber"
+    type = "S"
+  }
+}
+
+resource "aws_apigatewayv2_route" "nuisance" {
+
+  for_each = toset([
+    "GET /nuisance",
+    "GET /nuisance/{phoneNumber}",
+    "POST /nuisance",
+    "PUT /nuisance/{phoneNumber}",
+    "DELETE /nuisance/{phoneNumber}",
+    "POST /nuisance/{phoneNumber}/logs",
+  ])
+
+  api_id = aws_apigatewayv2_api.message_api.id
+
+  route_key = each.value
 
   target = "integrations/${aws_apigatewayv2_integration.message_api.id}"
 }
