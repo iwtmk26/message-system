@@ -159,7 +159,7 @@ aws cloudfront create-invalidation --distribution-id <ディストリビュー�
 | 通知先の Teams メールアドレス | `terraform/main.tf` の Lambda 環境変数 `TEAMS_EMAIL` |
 | 送信元メールアドレス（既定） | 同 `FROM_EMAIL`。SES で検証済みである必要がある |
 | 社員ごとの送信元 | `Members` テーブルの `fromEmail`・`displayName` |
-| 完了画面の Teams チャネルへのリンク | `frontend/src/pages/CompletionPage.tsx` |
+| 伝言一覧のお知らせの Teams チャネルへのリンク | `frontend/src/messageApi.ts`（`TEAMS_CHANNEL_URL`） |
 | Lambda の実行ロール | Terraform の外（AWS コンソールで作成）。名前は `terraform/main.tf` を参照 |
 
 認証情報（AWS のキーなど）はリポジトリに置かない。`.env`・`*.tfstate`・`*.tfvars` は `.gitignore` で除外済み。

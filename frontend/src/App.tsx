@@ -1,8 +1,6 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import "./App.css";
 import RegistrationPage from "./pages/RegistrationPage";
-import ConfirmationPage from "./pages/ConfirmationPage";
-import CompletionPage from "./pages/CompletionPage.tsx";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
 import NuisanceListPage from "./pages/NuisanceListPage";
@@ -20,7 +18,7 @@ function App() {
 
       <Routes>
 
-        {/* 業務は、まず番号の確認から始まるので、最初の画面は「迷惑電話チェック」 */}
+        {/* 最初の画面は、登録フォーム（電話番号を入れると、迷惑番号か自動で確認する） */}
         <Route
           path="/"
           element={<Navigate to="/register" replace />}
@@ -29,16 +27,6 @@ function App() {
         <Route
           path="/register"
           element={<RegistrationPage />}
-        />
-
-        <Route
-          path="/confirm"
-          element={<ConfirmationPage />}
-        />
-
-        <Route
-          path="/complete"
-          element={<CompletionPage />}
         />
 
         <Route

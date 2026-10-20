@@ -1,9 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 
-/*
- * 画面上部の移動タブ。
- * 登録の途中（確認・完了）の画面には出さない。
- */
+/* 画面上部の移動タブ（矢印の形）。 */
 
 const TABS = [
   {
@@ -27,10 +24,6 @@ const TABS = [
 function NavTabs() {
 
   const { pathname } = useLocation();
-
-  if (pathname === "/confirm" || pathname === "/complete") {
-    return null;
-  }
 
   return (
     <nav className="nav-tabs" aria-label="業務の流れ">

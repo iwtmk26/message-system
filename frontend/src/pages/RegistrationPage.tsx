@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { composeBody, splitBody } from "../messageFormat";
+import { useNavigate } from "react-router-dom";
+import { composeBody } from "../messageFormat";
 import { apiFetch } from "../api";
 import NuisanceCheck from "../components/NuisanceCheck";
 import { CheckIcon } from "../components/Icons";
@@ -36,55 +36,25 @@ type Member = {
 function RegistrationPage() {
 
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const initial = splitBody(
-    location.state?.messageBody ?? ""
-  );
+  const [phone, setPhone] = useState("");
 
-  const [phone, setPhone] = useState(
-    location.state?.phone ?? ""
-  );
+  const [companyName, setCompanyName] = useState("");
 
-  const [companyName, setCompanyName] =
-    useState(initial.company);
+  const [messageBody, setMessageBody] = useState("");
 
-  const [messageBody, setMessageBody] =
-    useState(initial.body);
-
+  // 自分の名前は、前に選んだものを覚えておく
   const [receiverName, setReceiverName] = useState(
-    location.state?.receiverName ?? ""
+    () => localStorage.getItem("receiverName") ?? ""
   );
 
   const [members, setMembers] =
     useState<Member[]>([]);
 
-  const [destination, setDestination] = useState(
-    location.state?.destination ?? ""
-  );
+  const [destination, setDestination] = useState("");
 
   const [errorMessage, setErrorMessage] =
     useState("");
-
-  useEffect(() => {
-
-    const savedName =
-      localStorage.getItem(
-        "receiverName"
-      );
-
-    if (
-      savedName &&
-      !location.state?.receiverName
-    ) {
-
-      setReceiverName(
-        savedName
-      );
-
-    }
-
-  }, [location.state]);
 
   useEffect(() => {
 
@@ -167,31 +137,6 @@ function RegistrationPage() {
 
       setRegistering(false);
     }
-
-  };
-
-  const handleSubmit = () => {
-
-    const problem = validate();
-
-    if (problem) {
-      setErrorMessage(problem);
-      return;
-    }
-
-    setErrorMessage("");
-
-    navigate("/confirm", {
-      state: {
-        messageBody: composeBody(
-          companyName,
-          withPhone(messageBody, phone)
-        ),
-        receiverName,
-        destination,
-        phone,
-      },
-    });
 
   };
 
@@ -382,7 +327,7 @@ TEL：03-XXXX-XXXX`}
 
         )}
 
-        {/* 主な操作は、緑のボタン1つ。確認画面を通る登録は、副次的な操作 */}
+        {/* 主な操作は、緑のボタン1つ（真ん中） */}
         <div className="form-actions">
 
           <button
@@ -398,15 +343,6 @@ TEL：03-XXXX-XXXX`}
               <CheckIcon />
             )}
             {registering ? "登録しています…" : "登録する"}
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-ghost btn-lg"
-            onClick={handleSubmit}
-            disabled={registering}
-          >
-            確認してから登録する
           </button>
 
         </div>

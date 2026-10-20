@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { splitBody } from "../messageFormat";
 import { apiFetch } from "../api";
-import { notifyText } from "../messageApi";
+import { API_ENV } from "../api";
+import { TEAMS_CHANNEL_URL, notifyText } from "../messageApi";
 import TrashIcon from "../components/TrashIcon";
 import PersonIcon from "../components/PersonIcon";
 import { CheckCircleIcon, CloseIcon } from "../components/Icons";
@@ -170,6 +171,18 @@ function ListPage() {
               </strong>
               {" "}
               {notifyText()}
+              {API_ENV === "prod" && (
+                <>
+                  {" "}
+                  <a
+                    href={TEAMS_CHANNEL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Teamsで確認する →
+                  </a>
+                </>
+              )}
             </p>
 
             <button

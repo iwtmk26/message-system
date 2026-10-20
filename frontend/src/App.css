@@ -176,131 +176,6 @@ button:active {
 
 
 /* =========================
-   確認画面
-========================= */
-
-.confirm-area {
-  padding: 24px;
-}
-
-.confirm-message {
-  font-size: 18px;
-  color: black;
-}
-
-.confirm-card {
-  margin-top: 20px;
-  border: 2px solid white;
-  border-radius: 12px;
-  background: #f8fafc;
-  padding: 16px;
-}
-
-.confirm-item {
-  padding: 16px 0;
-  border-bottom: 1px solid white;
-}
-
-.confirm-item:last-child {
-  border-bottom: none;
-}
-
-.label {
-  color: black;
-  margin-bottom: 8px;
-}
-
-.destination {
-  color: #9cc3bb;
-  font-weight: bold;
-}
-
-.button-area {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-.back-button {
-  background: white;
-  color: black;
-  border: 2px solid white;
-  padding: 14px 32px;
-  border-radius: 8px;
-}
-
-.submit-button {
-  background: green;
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 8px;
-}
-
-
-/* =========================
-   完了画面
-========================= */
-
-.complete-area {
-  padding: 32px;
-  text-align: center;
-}
-
-.success-title {
-  font-size: 32px;
-  font-weight: bold;
-  color: #1f2937;
-  margin-bottom: 24px;
-}
-
-.complete-card {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 24px auto;
-  max-width: 400px;
-}
-
-.complete-card p {
-  margin: 12px 0;
-  font-size: 18px;
-}
-
-.complete-message {
-  color: #005b49;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 24px;
-}
-
-.complete-button {
-  background: #267365;
-  color: white;
-  min-width: 220px;
-  font-size: 18px;
-}
-
-.register-button {
-  display: block;
-  margin: 24px auto 0;
-}
-
-/* 「新規登録」と同じ緑にそろえるボタン */
-.register-button,
-.nuisance-search-row button {
-  background: #005b49;
-  box-shadow: 0 2px 6px rgba(0, 91, 73, 0.3);
-}
-
-.register-button:hover,
-.nuisance-search-row button:hover {
-  background: #00493a;
-  box-shadow: 0 4px 10px rgba(0, 91, 73, 0.35);
-}
-
-
-/* =========================
    エラー
 ========================= */
 
@@ -315,22 +190,6 @@ button:active {
 /* =========================
    Teamsリンク
 ========================= */
-
-.teams-link-button {
-  display: inline-block;
-  background: #005b49;
-  color: white;
-  text-decoration: none;
-  padding: 14px 32px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 16px;
-}
-
-.teams-link-button:hover {
-  opacity: 0.9;
-}
 
 
 /* =========================
@@ -748,27 +607,6 @@ a.list-button {
 
 .small-button.secondary:hover {
   background: #eaf3f1;
-}
-
-
-/* 検索行 */
-
-.nuisance-search-row {
-  display: flex;
-  gap: 8px;
-  align-items: stretch;
-}
-
-.nuisance-search-row input {
-  flex: 1;
-  min-width: 0;
-  font-size: 20px;
-}
-
-.nuisance-search-row button {
-  padding: 0 24px;
-  font-size: 18px;
-  white-space: nowrap;
 }
 
 
@@ -1343,7 +1181,6 @@ a.list-button {
 }
 
 
-
 /* =========================
    文の途中で、変な位置で改行しないための書式
    ・文節（phrase）の途中では折り返さない
@@ -1398,18 +1235,6 @@ a.list-button {
   border-bottom: 1px solid #d1e3dd;
   color: #1f2937;
 }
-
-/* 確認画面：内容の改行をそのまま見せる */
-.confirm-body {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.confirm-company {
-  font-weight: bold;
-}
-
-
 
 
 /* =========================
@@ -1713,7 +1538,6 @@ summary:focus-visible {
 }
 
 
-
 /* =========================
    ボタンの色の使い分け
    ・緑 …… 伝言を登録する（会社の色）
@@ -2006,4 +1830,149 @@ button.btn.btn-lg {
   .check-choice {
     align-items: stretch;
   }
+}
+
+
+/* =========================
+   枠のデザイン（すっきりした額縁風）
+   ・薄い緑の斜めの縞の枠の中に、白い面
+   ・上に、マスキングテープ風の細い印
+   ・伝言のメモ、迷惑番号のカード、電話番号の確認の枠で共通
+   （前の、チェック柄・点線・濃い緑の帯の見た目を、置き換える）
+========================= */
+
+:root {
+  --frame-bg: #e4f1ed;
+  --frame-stripe: rgba(0, 91, 73, 0.07);
+  --frame-line: #cfe3dd;
+}
+
+.memo,
+.ncard {
+  position: relative;
+  overflow: visible;
+  padding: 8px;
+  border: none;
+  border-radius: 16px;
+  background-color: var(--frame-bg);
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--frame-stripe) 0 6px,
+    transparent 6px 12px
+  );
+  box-shadow: 0 2px 10px rgba(0, 91, 73, 0.1);
+}
+
+/* マスキングテープ風の印 */
+.memo::before,
+.ncard::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 60px;
+  height: 15px;
+  transform: translateX(-50%) rotate(-1.5deg);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0, 91, 73, 0.26) 0 6px,
+    rgba(255, 255, 255, 0.6) 6px 12px
+  );
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.memo:hover,
+.ncard[open] {
+  box-shadow: 0 6px 18px rgba(0, 91, 73, 0.16);
+}
+
+/* 見出しの行は、枠の中に、文字だけで置く（濃い緑の帯は、やめる） */
+.memo-head {
+  padding: 8px 6px 8px 8px;
+  background: none;
+  color: var(--ui-primary);
+  border-radius: 0;
+}
+
+.memo-title {
+  color: var(--ui-primary);
+}
+
+.memo-date {
+  color: #4b5563;
+}
+
+.memo-delete {
+  color: #4b5563;
+}
+
+.memo-delete:hover {
+  background: rgba(0, 91, 73, 0.1);
+  color: var(--ui-primary-dark);
+}
+
+.memo-body {
+  padding: 0;
+}
+
+/* 白い面（内容） */
+.memo-paper {
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--frame-line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+/* 迷惑番号のカード：閉じた状態は、枠の中に、電話番号と会社名だけ */
+.ncard-summary {
+  padding: 8px 8px 8px 10px;
+  background: none;
+  color: var(--ui-primary);
+  border-radius: 10px;
+}
+
+.ncard-phone {
+  color: var(--ui-primary);
+}
+
+.ncard-company {
+  color: #374151;
+}
+
+.ncard-chevron {
+  border-color: var(--ui-primary);
+}
+
+.ncard-body {
+  padding: 8px 0 0;
+}
+
+/* 電話番号の確認の枠：白い面に、細い線 */
+.check-clear {
+  background: #fff;
+  border: 1.5px solid #b7d9cd;
+  border-radius: 14px;
+}
+
+.check-form {
+  background: #fffaf0;
+  border: 1.5px solid var(--ui-amber-line);
+}
+
+/* 登録フォーム下のボタン：1つを、真ん中に */
+.form-actions {
+  justify-content: center;
+}
+
+/* テープの印が、上の枠に重ならないように、間をあける */
+.message-list {
+  gap: 18px;
+  padding-top: 8px;
+}
+
+.ncard {
+  margin-top: 18px;
 }

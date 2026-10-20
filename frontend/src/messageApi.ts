@@ -29,6 +29,10 @@ export async function postMessage(input: {
   }
 }
 
+/* 本番の Teams チャネル「71_伝言メモ」へのリンク（本番のときだけ、お知らせに出す） */
+export const TEAMS_CHANNEL_URL =
+  "https://teams.microsoft.com/l/channel/19%3Ae19e8e0947924ee58a069f9aea89d25c%40thread.tacv2/71_%E4%BC%9D%E8%A8%80%E3%83%A1%E3%83%A2?groupId=5f28bedb-2023-4e45-8647-6322dd6db437&tenantId=90d75b8f-615b-463e-9492-5cb3672bad9e";
+
 /* 登録のあとに、通知についてお知らせする文言（環境に合わせる） */
 export function notifyText(): string {
 
