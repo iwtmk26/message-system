@@ -266,6 +266,7 @@ function NuisanceListPage() {
 
           <button
             type="button"
+            className="btn btn-amber"
             onClick={openCreateForm}
           >
             新規登録
@@ -381,7 +382,7 @@ function NuisanceListPage() {
 
               <button
                 type="submit"
-                className="small-button"
+                className="btn btn-amber btn-sm"
               >
                 {form.mode === "edit"
                   ? "更新する"
@@ -390,7 +391,7 @@ function NuisanceListPage() {
 
               <button
                 type="button"
-                className="small-button secondary"
+                className="btn btn-ghost btn-sm"
                 onClick={closeForm}
               >
                 キャンセル

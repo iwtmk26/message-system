@@ -389,7 +389,7 @@ TEL：03-XXXX-XXXX`}
           className="register-button"
           onClick={handleSubmit}
         >
-          登録する
+          確認して登録する
         </button>
 
       </div>

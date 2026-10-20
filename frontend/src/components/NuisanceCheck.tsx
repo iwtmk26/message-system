@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import NuisanceCard from "./NuisanceCard";
+import { BanIcon, CheckCircleIcon, CheckIcon, WarnIcon } from "./Icons";
 import {
   MIN_PHONE_DIGITS,
   createNuisance,
@@ -176,7 +177,8 @@ function NuisanceCheck({
 
       {state.kind === "loading" && (
 
-        <p className="check-status">
+        <p className="check-status check-loading">
+          <span className="spinner" aria-hidden="true" />
           迷惑番号か確認しています…
         </p>
 
@@ -195,6 +197,7 @@ function NuisanceCheck({
         <div className="nuisance-hit">
 
           <p className="nuisance-badge is-hit">
+            <WarnIcon size={16} />
             迷惑番号に登録されています
           </p>
 
@@ -231,33 +234,60 @@ function NuisanceCheck({
         <div className="check-clear">
 
           <p className="check-clear-text">
-            <span className="check-clear-mark" aria-hidden="true">
-              ✓
+            <span className="check-clear-mark">
+              <CheckCircleIcon size={20} />
             </span>
-            {formatPhone(state.digits)} は、迷惑番号には登録されていません
+            <span>
+              {formatPhone(state.digits)} は、
+              <wbr />
+              迷惑番号には登録されていません
+            </span>
           </p>
 
-          <div className="check-clear-actions">
+          <div className="check-choices">
 
-            <button
-              type="button"
-              className="small-button"
-              onClick={onRegisterMessage}
-              disabled={registeringMessage}
-            >
-              {registeringMessage
-                ? "登録しています…"
-                : "このまま伝言を登録する"}
-            </button>
+            <div className="check-choice">
 
-            <button
-              type="button"
-              className="small-button secondary"
-              onClick={openForm}
-              aria-expanded={formOpen}
-            >
-              迷惑番号として登録する
-            </button>
+              <span className="check-choice-label">
+                ふつうの電話のとき
+              </span>
+
+              <button
+                type="button"
+                className="btn btn-green"
+                onClick={onRegisterMessage}
+                disabled={registeringMessage}
+                aria-busy={registeringMessage}
+              >
+                {registeringMessage ? (
+                  <span className="spinner" aria-hidden="true" />
+                ) : (
+                  <CheckIcon />
+                )}
+                {registeringMessage
+                  ? "登録しています…"
+                  : "このまま伝言を登録する"}
+              </button>
+
+            </div>
+
+            <div className="check-choice">
+
+              <span className="check-choice-label">
+                迷惑電話だったとき
+              </span>
+
+              <button
+                type="button"
+                className="btn btn-amber"
+                onClick={openForm}
+                aria-expanded={formOpen}
+              >
+                <BanIcon />
+                迷惑番号として登録する
+              </button>
+
+            </div>
 
           </div>
 
@@ -274,7 +304,8 @@ function NuisanceCheck({
             <div className="check-form">
 
               <p className="check-form-title">
-                迷惑番号として登録（着信も1件、記録します）
+                <BanIcon size={16} />
+                迷惑番号として登録します（着信も1件、記録します）
               </p>
 
               <input
@@ -305,16 +336,20 @@ function NuisanceCheck({
 
                 <button
                   type="button"
-                  className="small-button"
+                  className="btn btn-amber"
                   onClick={registerNuisance}
                   disabled={formBusy}
+                  aria-busy={formBusy}
                 >
-                  {formBusy ? "登録しています…" : "登録する"}
+                  {formBusy && (
+                    <span className="spinner" aria-hidden="true" />
+                  )}
+                  {formBusy ? "登録しています…" : "迷惑番号に登録する"}
                 </button>
 
                 <button
                   type="button"
-                  className="small-button secondary"
+                  className="btn btn-ghost"
                   onClick={() => setFormOpen(false)}
                   disabled={formBusy}
                 >

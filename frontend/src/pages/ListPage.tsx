@@ -5,6 +5,7 @@ import { apiFetch } from "../api";
 import { notifyText } from "../messageApi";
 import TrashIcon from "../components/TrashIcon";
 import PersonIcon from "../components/PersonIcon";
+import { CheckCircleIcon, CloseIcon } from "../components/Icons";
 
 type Message = {
   messageId: string;
@@ -21,6 +22,8 @@ function ListPage() {
 
   const registered: { destination: string; receiverName: string } | null =
     location.state?.registered ?? null;
+
+  const [noticeClosed, setNoticeClosed] = useState(false);
 
   const [messages, setMessages] =
     useState<Message[]>([]);
@@ -153,15 +156,32 @@ function ListPage() {
 
       <div className="form-area">
 
-        {registered && (
+        {registered && !noticeClosed && (
 
-          <p className="registered-notice" role="status">
-            <strong>
-              {registered.destination} 宛の伝言を登録しました。
-            </strong>
-            {" "}
-            {notifyText()}
-          </p>
+          <div className="registered-notice" role="status">
+
+            <span className="registered-notice-icon">
+              <CheckCircleIcon size={22} />
+            </span>
+
+            <p>
+              <strong>
+                {registered.destination} 宛の伝言を登録しました。
+              </strong>
+              {" "}
+              {notifyText()}
+            </p>
+
+            <button
+              type="button"
+              className="registered-notice-close"
+              aria-label="お知らせを閉じる"
+              onClick={() => setNoticeClosed(true)}
+            >
+              <CloseIcon size={16} />
+            </button>
+
+          </div>
 
         )}
 

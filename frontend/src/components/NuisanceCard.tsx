@@ -188,7 +188,7 @@ function NuisanceCard({
 
             <button
               type="button"
-              className="small-button"
+              className="btn btn-amber btn-sm"
               onClick={handleAddLog}
             >
               今回の着信を記録する

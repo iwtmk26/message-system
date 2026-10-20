@@ -1712,14 +1712,252 @@ summary:focus-visible {
   font-size: 15px;
 }
 
+
+
+/* =========================
+   ボタンの色の使い分け
+   ・緑 …… 伝言を登録する（会社の色）
+   ・黄 …… 迷惑番号に関する操作（登録、着信の記録）
+   ・赤 …… 削除
+========================= */
+
+:root {
+  --ui-amber: #f5a524;
+  --ui-amber-hi: #ffb83f;
+  --ui-amber-lo: #e8950f;
+  --ui-amber-ink: #2b1a00;
+  --ui-amber-text: #8a5300;
+  --ui-amber-bg: #fff7e6;
+  --ui-amber-line: #f1d8a6;
+}
+
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s,
+    filter 0.2s;
+}
+
+button.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+button.btn:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+button.btn.btn-sm {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+button.btn-green {
+  background: linear-gradient(135deg, #0a6e59, var(--ui-primary));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 91, 73, 0.3);
+}
+
+button.btn-green:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0d7d66, var(--ui-primary-dark));
+  box-shadow: 0 6px 14px rgba(0, 91, 73, 0.32);
+  transform: translateY(-1px);
+}
+
+button.btn-amber {
+  background: linear-gradient(135deg, var(--ui-amber-hi), var(--ui-amber));
+  color: var(--ui-amber-ink);
+  box-shadow: 0 2px 8px rgba(224, 142, 11, 0.35);
+}
+
+button.btn-amber:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffc25a, var(--ui-amber-lo));
+  box-shadow: 0 6px 14px rgba(224, 142, 11, 0.4);
+  transform: translateY(-1px);
+}
+
+button.btn-ghost {
+  background: #fff;
+  color: var(--ui-primary);
+  border: 1.5px solid var(--ui-primary);
+  box-shadow: none;
+}
+
+button.btn-ghost:hover:not(:disabled) {
+  background: #eaf3f1;
+}
+
+/* くるくる回る印（読み込み中・登録中） */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 電話番号の確認：結果の見た目 */
+.check-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nuisance-badge.is-hit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.check-clear {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+}
+
+.check-clear-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.check-clear-mark {
+  display: inline-flex;
+  margin: 1px 0 0;
+  color: var(--ui-primary);
+}
+
+.check-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.check-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.check-choice-label {
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* 迷惑番号として登録する、小さなフォーム（黄の色合い） */
+.check-form {
+  padding: 12px 14px;
+  border: 1px solid var(--ui-amber-line);
+  border-radius: 12px;
+  background: var(--ui-amber-bg);
+}
+
+.check-form-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ui-amber-text);
+}
+
 /* 伝言一覧：登録した直後のお知らせ */
 .registered-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   margin: 0 0 16px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   border: 1px solid #b7d9cd;
-  border-radius: 10px;
+  border-left: 4px solid var(--ui-primary);
+  border-radius: 12px;
   background: #eef8f4;
   color: #1f2937;
   font-size: 14px;
   text-align: left;
+  animation: notice-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.registered-notice p {
+  flex: 1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.registered-notice-icon {
+  display: inline-flex;
+  color: var(--ui-primary);
+}
+
+button.registered-notice-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5563;
+  box-shadow: none;
+}
+
+button.registered-notice-close:hover {
+  background: rgba(0, 91, 73, 0.1);
+  color: var(--ui-primary-dark);
+}
+
+@keyframes notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .check-choices {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse) {
+  button.btn.btn-sm {
+    min-height: 44px;
+  }
+
+  button.registered-notice-close {
+    width: 44px;
+    height: 44px;
+  }
 }
