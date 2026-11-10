@@ -1976,3 +1976,85 @@ button.btn.btn-lg {
 .ncard {
   margin-top: 18px;
 }
+
+/* =========================
+   社員の管理（目立たない入口）
+========================= */
+
+.admin-footer {
+  text-align: center;
+  padding: 0 16px 24px;
+}
+
+/* 普段は薄く小さく。気づいた人だけが使う */
+.admin-link {
+  font-size: 12px;
+  color: #6b7c78;
+  opacity: 0.6;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.admin-link:hover,
+.admin-link:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.members-heading {
+  font-size: 16px;
+  color: var(--ui-primary-dark);
+  margin: 24px 0 8px;
+}
+
+.member-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.member-name {
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.member-tag {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #4b5b57;
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+button.btn-sm {
+  padding: 6px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.members-retired {
+  margin-top: 24px;
+}
+
+.members-retired summary {
+  cursor: pointer;
+  color: #4b5b57;
+  font-size: 14px;
+}
+
+.members-back {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+}

@@ -63,12 +63,40 @@ type MockMessage = {
 
 const STORAGE_KEY = "messages.mock.v1";
 
+// 本物の API と同じく、伝言先に使われた回数順（グループと個人が混ざる）を想定した並び
 const MOCK_MEMBERS = [
   { memberId: "m1", memberName: "山田 太郎" },
+  { memberId: "g3", memberName: "人事" },
   { memberId: "m2", memberName: "佐藤 花子" },
+  { memberId: "g4", memberName: "営業" },
   { memberId: "m3", memberName: "鈴木 一郎" },
+  { memberId: "g1", memberName: "総務" },
   { memberId: "m4", memberName: "高橋 美咲" },
+  { memberId: "g2", memberName: "経理" },
 ];
+
+// 仮データでの「非表示」の印は、ブラウザに覚える（本物の API は、Members の retired）
+const RETIRED_KEY = "members.mock.retired.v1";
+
+function loadRetired(): string[] {
+  try {
+    const raw = localStorage.getItem(RETIRED_KEY);
+    if (raw) {
+      return JSON.parse(raw) as string[];
+    }
+  } catch {
+    // 読めない場合は、だれも非表示にしない
+  }
+  return [];
+}
+
+function saveRetired(ids: string[]): void {
+  try {
+    localStorage.setItem(RETIRED_KEY, JSON.stringify(ids));
+  } catch {
+    // 保存できなくても動作は続ける
+  }
+}
 
 const SEED: MockMessage[] = [
   {
@@ -135,7 +163,25 @@ async function mockFetch(
   const pathname = url.pathname;
 
   if (method === "GET" && pathname === "/members") {
-    return json(MOCK_MEMBERS);
+    const retired = loadRetired();
+    const all = url.searchParams.get("includeRetired") === "true";
+    // 本物の API と同じく、retired は文字列 "true" で返す
+    return json(
+      MOCK_MEMBERS.filter((m) => all || !retired.includes(m.memberId)).map(
+        (m) => (retired.includes(m.memberId) ? { ...m, retired: "true" } : m)
+      )
+    );
+  }
+
+  if (method === "PUT" && pathname.startsWith("/members/")) {
+    const id = decodeURIComponent(pathname.slice("/members/".length));
+    if (!MOCK_MEMBERS.some((m) => m.memberId === id)) {
+      return json({ message: "社員が見つかりません" }, 404);
+    }
+    const body = JSON.parse(String(init?.body ?? "{}"));
+    const rest = loadRetired().filter((x) => x !== id);
+    saveRetired(body.retired === true ? [...rest, id] : rest);
+    return json({ memberId: id, retired: body.retired === true });
   }
 
   if (method === "GET" && pathname === "/messages") {

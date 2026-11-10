@@ -69,12 +69,23 @@ public class Handler
 
         /*
          * ============================
+         * PUT /members/{memberId}（非表示にする・戻す）
+         * ============================
+         */
+        if (MembersApi.matches(routeKey)) {
+
+            return MembersApi.handle(input);
+
+        }
+
+        /*
+         * ============================
          * GET /members
          * ============================
          */
         if ("GET /members".equals(routeKey)) {
 
-            return getMembers();
+            return getMembers(input);
 
         }
 
@@ -169,6 +180,19 @@ public class Handler
                 /*
                  * receiverName
                  */
+                /*
+                 * 自分の名前は任意。未入力（null）のときは空文字で保存する
+                 */
+                if (request.getReceiverName() == null) {
+
+                    request.setReceiverName("");
+
+                }
+
+                request.setReceiverName(
+                        request.getReceiverName().trim()
+                );
+
                 item.put(
                         "receiverName",
                         AttributeValue.builder()
@@ -255,7 +279,7 @@ public class Handler
      * メンバー一覧取得
      * ==========================================
      */
-    private String getMembers() {
+    private String getMembers(Map<String, Object> input) {
 
         DynamoDbClient dynamoDb =
                 DynamoDbClient.builder()
@@ -309,6 +333,23 @@ public class Handler
         }
 
         /*
+         * 「非表示」（retired = true）の人は、ふつうの一覧には出さない。
+         * 管理画面だけ、?includeRetired=true で、非表示の人も受け取る
+         */
+        boolean includeRetired = false;
+
+        Object query = input.get("queryStringParameters");
+
+        if (query instanceof Map) {
+
+            includeRetired =
+                    "true".equals(
+                            ((Map<?, ?>) query).get("includeRetired")
+                    );
+
+        }
+
+        /*
          * メンバー一覧
          */
         List<Map<String, String>> members =
@@ -318,6 +359,18 @@ public class Handler
                 Map<String, AttributeValue> item
                 : membersResponse.items()
         ) {
+
+            boolean retired =
+                    item.containsKey("retired")
+                    && Boolean.TRUE.equals(
+                            item.get("retired").bool()
+                    );
+
+            if (retired && !includeRetired) {
+
+                continue;
+
+            }
 
             Map<String, String> member =
                     new HashMap<>();
@@ -347,6 +400,12 @@ public class Handler
                         "displayName",
                         item.get("displayName").s()
                 );
+
+            }
+
+            if (retired) {
+
+                member.put("retired", "true");
 
             }
 
@@ -875,10 +934,20 @@ public class Handler
         /*
          * 受電者に対応する送信元情報取得
          */
+        String receiverName =
+                request.getReceiverName();
+
+        boolean hasReceiver =
+                receiverName != null
+                && !receiverName.isEmpty();
+
+        /*
+         * 自分の名前が未入力なら、社員の表は引かず、既定の差出人を使う
+         */
         Map<String, String> memberSenderInfo =
-                getMemberSenderInfo(
-                        request.getReceiverName()
-                );
+                hasReceiver
+                        ? getMemberSenderInfo(receiverName)
+                        : Collections.emptyMap();
 
         /*
          * 送信元メールアドレス
@@ -940,7 +1009,7 @@ public class Handler
                 + request.getDestination()
                 + "\n"
                 + "受電者: "
-                + request.getReceiverName()
+                + (hasReceiver ? receiverName : "（未入力）")
                 + "\n\n"
                 + "伝言内容\n"
                 + "------------------\n"
