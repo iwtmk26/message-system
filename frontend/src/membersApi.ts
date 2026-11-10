@@ -30,14 +30,26 @@ export async function setMemberRetired(
   retired: boolean
 ): Promise<void> {
 
-  const response = await apiFetch(
-    `/members/${encodeURIComponent(memberId)}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ retired }),
-    }
-  );
+  let response: Response;
+
+  try {
+
+    response = await apiFetch(
+      `/members/${encodeURIComponent(memberId)}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ retired }),
+      }
+    );
+
+  } catch {
+
+    // ブラウザの「Failed to fetch」。API に届かない（ルート未作成・CORS・ネットワーク）
+    throw new Error(
+      "API に接続できませんでした（Failed to fetch）。テスト環境の API にルート PUT /members/{memberId} があるか、確認してください"
+    );
+  }
 
   if (!response.ok) {
     throw new Error(
