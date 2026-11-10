@@ -314,7 +314,7 @@ function DetailPage() {
               </div>
 
               <span className="memo-from">
-                受電者：{message.receiverName}
+                受電者：{message.receiverName || "（未入力）"}
               </span>
 
             </div>

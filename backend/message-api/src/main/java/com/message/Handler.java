@@ -169,6 +169,19 @@ public class Handler
                 /*
                  * receiverName
                  */
+                /*
+                 * 自分の名前は任意。未入力（null）のときは空文字で保存する
+                 */
+                if (request.getReceiverName() == null) {
+
+                    request.setReceiverName("");
+
+                }
+
+                request.setReceiverName(
+                        request.getReceiverName().trim()
+                );
+
                 item.put(
                         "receiverName",
                         AttributeValue.builder()
@@ -875,10 +888,20 @@ public class Handler
         /*
          * 受電者に対応する送信元情報取得
          */
+        String receiverName =
+                request.getReceiverName();
+
+        boolean hasReceiver =
+                receiverName != null
+                && !receiverName.isEmpty();
+
+        /*
+         * 自分の名前が未入力なら、社員の表は引かず、既定の差出人を使う
+         */
         Map<String, String> memberSenderInfo =
-                getMemberSenderInfo(
-                        request.getReceiverName()
-                );
+                hasReceiver
+                        ? getMemberSenderInfo(receiverName)
+                        : Collections.emptyMap();
 
         /*
          * 送信元メールアドレス
@@ -940,7 +963,7 @@ public class Handler
                 + request.getDestination()
                 + "\n"
                 + "受電者: "
-                + request.getReceiverName()
+                + (hasReceiver ? receiverName : "（未入力）")
                 + "\n\n"
                 + "伝言内容\n"
                 + "------------------\n"

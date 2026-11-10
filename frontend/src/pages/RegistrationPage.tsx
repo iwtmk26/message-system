@@ -5,6 +5,7 @@ import { apiFetch } from "../api";
 import NuisanceCheck from "../components/NuisanceCheck";
 import { CheckIcon } from "../components/Icons";
 import { postMessage } from "../messageApi";
+import { sortDestinations, isGroup, type Member } from "../memberOrder";
 import {
   formatPhone,
   normalizePhone,
@@ -27,11 +28,6 @@ function withPhone(body: string, phone: string): string {
 
   return `${body.trimEnd()}\nTEL：${formatPhone(digits)}`;
 }
-
-type Member = {
-  memberId: string;
-  memberName: string;
-};
 
 function RegistrationPage() {
 
@@ -81,10 +77,6 @@ function RegistrationPage() {
       return "伝言内容を入力してください";
     }
 
-    if (!receiverName) {
-      return "自分の名前を入力してください";
-    }
-
     if (!destination) {
       return "伝言先を選択してください";
     }
@@ -115,11 +107,11 @@ function RegistrationPage() {
           companyName,
           withPhone(messageBody, phone)
         ),
-        receiverName,
+        receiverName: receiverName.trim(),
         destination,
       });
 
-      localStorage.setItem("receiverName", receiverName);
+      localStorage.setItem("receiverName", receiverName.trim());
 
       navigate("/list", {
         state: { registered: { destination, receiverName } },
@@ -240,14 +232,19 @@ TEL：03-XXXX-XXXX`}
 
         <div className="form-group">
 
-          <label>
+          <label htmlFor="receiver-input">
             自分の名前
-            <span className="required">
-              必須
+            <span className="optional">
+              任意
             </span>
           </label>
 
-          <select
+          {/* 入力式。候補として社員名（グループを除く）を出す */}
+          <input
+            id="receiver-input"
+            type="text"
+            list="receiver-candidates"
+            autoComplete="off"
             value={receiverName}
             onChange={(e) => {
 
@@ -261,24 +258,23 @@ TEL：03-XXXX-XXXX`}
               );
 
             }}
-          >
+            placeholder="例：山田 太郎"
+          />
 
-            <option value="">
-              選択してください
-            </option>
+          <datalist id="receiver-candidates">
 
-            {members.map((member) => (
+            {members
+              .filter((member) => !isGroup(member))
+              .map((member) => (
 
-              <option
-                key={member.memberId}
-                value={member.memberName}
-              >
-                {member.memberName}
-              </option>
+                <option
+                  key={member.memberId}
+                  value={member.memberName}
+                />
 
-            ))}
+              ))}
 
-          </select>
+          </datalist>
 
         </div>
 
@@ -304,7 +300,7 @@ TEL：03-XXXX-XXXX`}
               選択してください
             </option>
 
-            {members.map((member) => (
+            {sortDestinations(members).map((member) => (
 
               <option
                 key={member.memberId}

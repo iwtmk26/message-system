@@ -63,11 +63,16 @@ type MockMessage = {
 
 const STORAGE_KEY = "messages.mock.v1";
 
+// 本物の API と同じく、伝言先に使われた回数順（グループと個人が混ざる）を想定した並び
 const MOCK_MEMBERS = [
   { memberId: "m1", memberName: "山田 太郎" },
+  { memberId: "g3", memberName: "人事" },
   { memberId: "m2", memberName: "佐藤 花子" },
+  { memberId: "g4", memberName: "営業" },
   { memberId: "m3", memberName: "鈴木 一郎" },
+  { memberId: "g1", memberName: "総務" },
   { memberId: "m4", memberName: "高橋 美咲" },
+  { memberId: "g2", memberName: "経理" },
 ];
 
 const SEED: MockMessage[] = [
