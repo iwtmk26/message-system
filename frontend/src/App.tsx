@@ -1,9 +1,10 @@
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Routes, Route } from "react-router-dom";
 import "./App.css";
 import RegistrationPage from "./pages/RegistrationPage";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
 import NuisanceListPage from "./pages/NuisanceListPage";
+import MembersPage from "./pages/MembersPage";
 import EnvBanner from "./components/EnvBanner";
 import NavTabs from "./components/NavTabs";
 
@@ -50,7 +51,19 @@ function App() {
           element={<NuisanceListPage />}
         />
 
+        {/* 社員の管理。タブには出さず、画面の下の小さなリンクからだけ開く */}
+        <Route
+          path="/members/manage"
+          element={<MembersPage />}
+        />
+
       </Routes>
+
+      <footer className="admin-footer">
+        <Link to="/members/manage" className="admin-link">
+          管理
+        </Link>
+      </footer>
     </BrowserRouter>
   );
 }

@@ -197,6 +197,16 @@ resource "aws_apigatewayv2_route" "get_members" {
   target = "integrations/${aws_apigatewayv2_integration.message_api.id}"
 }
 
+# 社員を「非表示」にする・戻す（2026-11 追加。本番へは、担当者が plan → apply する）
+resource "aws_apigatewayv2_route" "put_member" {
+
+  api_id = aws_apigatewayv2_api.message_api.id
+
+  route_key = "PUT /members/{memberId}"
+
+  target = "integrations/${aws_apigatewayv2_integration.message_api.id}"
+}
+
 resource "aws_apigatewayv2_route" "get_messages" {
 
   api_id = aws_apigatewayv2_api.message_api.id

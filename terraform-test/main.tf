@@ -96,6 +96,7 @@ resource "aws_apigatewayv2_integration" "api" {
 resource "aws_apigatewayv2_route" "routes" {
   for_each = toset([
     "GET /members",
+    "PUT /members/{memberId}",
     "GET /messages",
     "GET /messages/{messageId}",
     "DELETE /messages",

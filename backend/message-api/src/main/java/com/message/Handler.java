@@ -69,12 +69,23 @@ public class Handler
 
         /*
          * ============================
+         * PUT /members/{memberId}（非表示にする・戻す）
+         * ============================
+         */
+        if (MembersApi.matches(routeKey)) {
+
+            return MembersApi.handle(input);
+
+        }
+
+        /*
+         * ============================
          * GET /members
          * ============================
          */
         if ("GET /members".equals(routeKey)) {
 
-            return getMembers();
+            return getMembers(input);
 
         }
 
@@ -268,7 +279,7 @@ public class Handler
      * メンバー一覧取得
      * ==========================================
      */
-    private String getMembers() {
+    private String getMembers(Map<String, Object> input) {
 
         DynamoDbClient dynamoDb =
                 DynamoDbClient.builder()
@@ -322,6 +333,23 @@ public class Handler
         }
 
         /*
+         * 「非表示」（retired = true）の人は、ふつうの一覧には出さない。
+         * 管理画面だけ、?includeRetired=true で、非表示の人も受け取る
+         */
+        boolean includeRetired = false;
+
+        Object query = input.get("queryStringParameters");
+
+        if (query instanceof Map) {
+
+            includeRetired =
+                    "true".equals(
+                            ((Map<?, ?>) query).get("includeRetired")
+                    );
+
+        }
+
+        /*
          * メンバー一覧
          */
         List<Map<String, String>> members =
@@ -331,6 +359,18 @@ public class Handler
                 Map<String, AttributeValue> item
                 : membersResponse.items()
         ) {
+
+            boolean retired =
+                    item.containsKey("retired")
+                    && Boolean.TRUE.equals(
+                            item.get("retired").bool()
+                    );
+
+            if (retired && !includeRetired) {
+
+                continue;
+
+            }
 
             Map<String, String> member =
                     new HashMap<>();
@@ -360,6 +400,12 @@ public class Handler
                         "displayName",
                         item.get("displayName").s()
                 );
+
+            }
+
+            if (retired) {
+
+                member.put("retired", "true");
 
             }
 

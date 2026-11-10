@@ -75,6 +75,29 @@ const MOCK_MEMBERS = [
   { memberId: "g2", memberName: "経理" },
 ];
 
+// 仮データでの「非表示」の印は、ブラウザに覚える（本物の API は、Members の retired）
+const RETIRED_KEY = "members.mock.retired.v1";
+
+function loadRetired(): string[] {
+  try {
+    const raw = localStorage.getItem(RETIRED_KEY);
+    if (raw) {
+      return JSON.parse(raw) as string[];
+    }
+  } catch {
+    // 読めない場合は、だれも非表示にしない
+  }
+  return [];
+}
+
+function saveRetired(ids: string[]): void {
+  try {
+    localStorage.setItem(RETIRED_KEY, JSON.stringify(ids));
+  } catch {
+    // 保存できなくても動作は続ける
+  }
+}
+
 const SEED: MockMessage[] = [
   {
     messageId: "seed-1",
@@ -140,7 +163,25 @@ async function mockFetch(
   const pathname = url.pathname;
 
   if (method === "GET" && pathname === "/members") {
-    return json(MOCK_MEMBERS);
+    const retired = loadRetired();
+    const all = url.searchParams.get("includeRetired") === "true";
+    // 本物の API と同じく、retired は文字列 "true" で返す
+    return json(
+      MOCK_MEMBERS.filter((m) => all || !retired.includes(m.memberId)).map(
+        (m) => (retired.includes(m.memberId) ? { ...m, retired: "true" } : m)
+      )
+    );
+  }
+
+  if (method === "PUT" && pathname.startsWith("/members/")) {
+    const id = decodeURIComponent(pathname.slice("/members/".length));
+    if (!MOCK_MEMBERS.some((m) => m.memberId === id)) {
+      return json({ message: "社員が見つかりません" }, 404);
+    }
+    const body = JSON.parse(String(init?.body ?? "{}"));
+    const rest = loadRetired().filter((x) => x !== id);
+    saveRetired(body.retired === true ? [...rest, id] : rest);
+    return json({ memberId: id, retired: body.retired === true });
   }
 
   if (method === "GET" && pathname === "/messages") {
